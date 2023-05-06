@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
+}
+@using BusinessCore.Models;
+@{
+    UserFullModel model = ViewBag.User as UserFullModel;
+}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Налаштування профілю</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels">Прізвище</label><input id="second_name" type="text" class="form-control" placeholder="Ваше Прізвище" value="@(model?.User?.SecondName)"></div>
+                    <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@(model?.User?.FirstName)" placeholder="Ваше Ім'я"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">По батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ваше ім'я по батькові" value="@(model?.User?.MiddleName)"></div>
+                    <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@(model?.User?.Email)"></div>
+                    <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@(model?.User?.Phone)"></div>
+                    <div class="col-md-12"><label class="labels">Посада</label><input id="rank" disabled type="text" class="form-control" placeholder="Посада" value="@(model?.User?.Rank?.Name)"></div>
+                    <div class="col-md-12"><label class="labels">Коміссія</label><input id="academic_degree" disabled type="text" class="form-control" placeholder="Коміссія" id="Академічний рівень" value="@(model?.User?.Comission?.Name)"></div>
+                    <div class="col-md-12"><label class="labels">Кафедра</label><input id="chair" disabled type="text" class="form-control" placeholder="Кафедра" value="@(model?.User?.Chair?.Name)"></div>
+                    <div class="col-md-12"><label class="labels">Відділення</label><input id="category_access" disabled type="text" class="form-control" placeholder="Відділення" value="@(model?.Department?.Name)"></div>
+                    <div class="col-md-12"><label class="labels">Ваш рівень доступу</label><input id="category_access" disabled type="text" class="form-control" placeholder="Рівень доступу" value="@(model?.User.AccessLevel.Name)"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
+                    <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/mainIndex.js" type="module"></script>
