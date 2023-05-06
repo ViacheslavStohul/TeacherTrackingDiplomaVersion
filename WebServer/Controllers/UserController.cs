@@ -1,6 +1,7 @@
 ﻿using BusinessCore.Models;
 using BusinessCore.Services.Interfaces;
 using DataAccess.Entities;
+using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -10,11 +11,13 @@ namespace WebServer.Controllers
     public class UserController : BaseController
     {
         private readonly IUserServise _userService;
+        private readonly ILogRepository _logRepository;
 
-        public UserController(ILogger<HomeController> logger, IUserServise userService)
+        public UserController(ILogger<HomeController> logger, IUserServise userService, ILogRepository log)
             : base(userService)
         {
             this._userService = userService;
+            this._logRepository = log;
         }
 
         [Route("LogIn")]
@@ -22,7 +25,7 @@ namespace WebServer.Controllers
         {
             try
             {
-                return this.Ok(await this._userService.SignInAsync(login, password, Request.HttpContext.Connection.RemoteIpAddress.ToString()));
+                return this.Ok(await this._userService.SignInAsync(login, password, this.Ip));
             }
             catch (Exception ex)
             {
@@ -39,11 +42,11 @@ namespace WebServer.Controllers
                 return this.BadRequest("Помилка при оновленні. Зверніться до адміністратора");
             }
 
-            model.Id = JsonConvert.DeserializeObject<UserInfo>(Request.Cookies["user"]).IdUserInfo;
+            model.Id = this.FullUser.User.IdUserInfo;
 
             try
             {
-                return this.Ok(await _userService.UpdateUserBasic(model));
+                return this.Ok(await _userService.UpdateUserBasicAsync(model, this.Ip));
             }
             catch (Exception ex)
             {

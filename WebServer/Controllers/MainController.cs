@@ -2,20 +2,23 @@
 using DataAccess.Entities;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Newtonsoft.Json;
 using System.Web;
 
 namespace WebServer.Controllers
 {
+    [Route("Main")]
     public class MainController : BaseController
     {
         private readonly IUserServise _userService;
-        private readonly ILogRepository _logRepository;
         public MainController(IUserServise userService)
             : base(userService)
         {
             _userService = userService;
         }
+
+        [Route("Index")]
         public async Task<IActionResult> Index()
         {
             try
@@ -66,9 +69,10 @@ namespace WebServer.Controllers
                 return View();
         }
 
-        public IActionResult Exit(int id)
+        [Route("Exit")]
+        public async Task<IActionResult> ExitAsync(int id)
         {
-            throw new NotImplementedException();
+            await _userService.SignOutAsync(id, this.Ip);
             return Redirect("../");
         }
     }

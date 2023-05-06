@@ -14,6 +14,8 @@ namespace BusinessCore.Services.Interfaces
 
         UserFullModel GetFullUserInfo(UserInfo userInfo);
 
-        Task<int> UpdateUserBasic(UserBasicUpdateRequestModel model);
+        Task<int> UpdateUserBasicAsync(UserBasicUpdateRequestModel model, string ip);
+
+        Task<int> SignOutAsync(int id, string ip);
     }
 }

@@ -30,5 +30,13 @@ namespace WebServer.Controllers
                 }
             }
         }
+
+        protected string Ip
+        {
+            get
+            {
+                return Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            }
+        }
     }
 }

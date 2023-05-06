@@ -46,20 +46,23 @@ namespace DataAccess.Repositories
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<int> GetUsersEntriesAmmount(UserInfo user, string Ip)
+        public async Task<int> GetUsersEntriesAmmountAsync(UserInfo user, string Ip)
         {
             return await this.context.Logs
-                .Where(l => l.User == user && l.Action == "Entry" && l.Time.AddHours(1) > DateTime.Now && l.Result == 0).CountAsync();
+                .Where(l => l.Action == "Entry" && l.Ip == Ip && l.Time.AddHours(1) > DateTime.Now && l.Result == 0).CountAsync();
         }
 
         public async Task SetToBanAsync(string ip)
         {
-            this.context.BanLogs.Add(new BanLog
+            if (!this.CheckIsIpInBan(ip))
             {
-                Ip = ip,
-                BanStarter = DateTime.Now,
-                BanEnded = DateTime.Now.AddHours(1),
-            });
+                this.context.BanLogs.Add(new BanLog
+                {
+                    Ip = ip,
+                    BanStarter = DateTime.Now,
+                    BanEnded = DateTime.Now.AddHours(1),
+                });
+            }
 
             await this.context.SaveChangesAsync();
         }
@@ -69,7 +72,7 @@ namespace DataAccess.Repositories
             return this.context.BanLogs.Any(l => l.BanEnded.AddHours(1) > DateTime.Now && l.Ip == ip);
         }
 
-        public async Task<int> LogData(UserInfo user, string action, string target, string objectTable, string ip, int result)
+        public async Task<int> LogDataAsync(UserInfo user, string action, string target, string objectTable, string ip, int result)
         {
             this.context.Logs.Add(new Log
             {

@@ -14,7 +14,7 @@ document.getElementById('totaySuperPuperExitBtn').addEventListener("click", func
     exitModal.toggle();
      let id = JSON.parse(Cookies.getCookie("user")).idUserInfo
      Cookies.deleteCookie("user");
-     window.location = "Exit?id=1";
+     window.location = `Exit?id=${id}`;
 });
 try {
     document.getElementById('userbtn').addEventListener("click", function () {
@@ -46,7 +46,7 @@ catch { };
 //sidebar
 
 document.querySelector('#mainbtn').addEventListener("click", function() {
-    window.location = "main";
+    window.location = "Index";
 })
 
 document.querySelector('body,html').addEventListener("click", function (e) {

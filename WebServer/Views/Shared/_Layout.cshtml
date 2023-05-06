@@ -1,5 +1,5 @@
-﻿@using Newtonsoft.Json;
-@using DataAccess.Entities;
+﻿@using BusinessCore.Models;
+@using Newtonsoft.Json;
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -20,7 +20,7 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('../images/img-02.jpg');"></div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0,0,0,0.5);">
         <form class="form-inline">
             <button class="btn menu-btn" type="button">
                 <img src="~/images/logo_white.svg" id="logoimg" width="50" height="50">
@@ -33,27 +33,23 @@
             <nav class="menu-list bg-dark">
                 <div id="mainbtn"><a href="#">Головна</a></div>
                 @{
-                    var a = Context.Request.Cookies["user"];
-                    try
-                    {
-                        UserInfo user = JsonConvert.DeserializeObject<UserInfo>(a);
 
-                        if (user.AccessLevel.Chair || user.AccessLevel.Comission || user.AccessLevel.Departament || user.AccessLevel.User)
+                    UserFullModel user = ViewBag.User as UserFullModel;
+                    if (user != null)
+                    {
+                        if (user.User.AccessLevel.Chair || user.User.AccessLevel.Comission || user.User.AccessLevel.Departament || user.User.AccessLevel.User)
                         {
                             <div id="userbtn"><a href="#">Користувачі</a></div>
                         }
 
-                        if (user.AccessLevel.Name == "Адміністратор")
+                        if (user.User.AccessLevel.Name == "Адміністратор")
                         {
                             <div id="chairbtn"><a href="#">Кафедри</a></div>
                             <div id="comissionbtn"><a href="#">Комісії</a></div>
                             <div id="departbtn"><a href="#">Відділення</a></div>
                         }
                     }
-                    catch
-                    {
 
-                    }
                 }
                 <div id="exitbtn"><a href="#">Вийти з системи</a></div>
             </nav>

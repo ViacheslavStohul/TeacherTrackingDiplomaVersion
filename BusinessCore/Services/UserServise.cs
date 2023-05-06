@@ -83,23 +83,24 @@ namespace BusinessCore.Services
         {
             string storedPassword = await _userRepository.GetUserPasswordHashAsync(username);
 
-            if (storedPassword == null || password == null) {
+            UserInfo user = _userRepository.GetUserInfoByLogin(username);
+            if (_logRepository.CheckIsIpInBan(ip))
+            {
+                throw new Exception("Спробуйте пізніше");
+            }
+            else if (await _logRepository.GetUsersEntriesAmmountAsync(user, ip) >= 5)
+            {
+                await _logRepository.SetToBanAsync(ip);
+                throw new Exception("Спробуйте пізніше");
+            }
+
+            if (storedPassword == null || password == null)
+            {
                 await _logRepository.LogEntryAsync(ip, 0, _userRepository.GetUserInfoByLogin(username));
                 throw new Exception("Неправильний логін або пароль");
             }
-
             if (VerifyPassword(password, storedPassword))
             {
-                UserInfo user = _userRepository.GetUserInfoByLogin(username);
-                if (_logRepository.CheckIsIpInBan(ip))
-                {
-                    throw new Exception("Спробуйте пізніше");
-                }
-                else if(await _logRepository.GetUsersEntriesAmmount(user, ip) >= 5)
-                {
-                    await _logRepository.SetToBanAsync(ip);
-                    throw new Exception("Спробуйте пізніше");
-                }
                 await _logRepository.LogEntryAsync(ip, 1, user);
 
                 return user;
@@ -120,10 +121,24 @@ namespace BusinessCore.Services
             };
         }
 
-        public async Task<int> UpdateUserBasic(UserBasicUpdateRequestModel model)
+        public async Task<int> UpdateUserBasicAsync(UserBasicUpdateRequestModel model, string ip)
         {
-            CheckUserModel(model);
-            return await _userRepository.UpdateUserBasicInfo(model.Id, model.FirstName, model.SecondName, model.MiddleName, model.Phone, model.Email);
+            try
+            {
+                CheckUserModel(model);
+                await _logRepository.LogDataAsync(_userRepository.GetFullUserInfo(model.Id), "altered", model.Id.ToString(), "user_infos", ip, 1);
+                return await _userRepository.UpdateUserBasicInfo(model.Id, model.FirstName, model.SecondName, model.MiddleName, model.Phone, model.Email);
+            }
+            catch
+            {
+                await _logRepository.LogDataAsync(_userRepository.GetFullUserInfo(model.Id), "altered", model.Id.ToString(), "user_infos", ip, 0);
+                throw;
+            }
+        }
+
+        public async Task<int> SignOutAsync(int id, string ip)
+        {
+            return await _logRepository.LogDataAsync(_userRepository.GetFullUserInfo(id), "unlogged", null, null, ip, 1);
         }
     }
 }

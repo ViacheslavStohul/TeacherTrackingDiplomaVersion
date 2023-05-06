@@ -11,10 +11,12 @@ namespace DataAccess.Repositories.Interfaces
     {
         Task LogEntryAsync(string ip, int result, UserInfo user);
 
-        Task<int> GetUsersEntriesAmmount(UserInfo user, string Ip);
+        Task<int> GetUsersEntriesAmmountAsync(UserInfo user, string Ip);
 
         Task SetToBanAsync(string ip);
 
         bool CheckIsIpInBan(string ip);
+
+        Task<int> LogDataAsync(UserInfo user, string action, string target, string objectTable, string ip, int result);
     }
 }
