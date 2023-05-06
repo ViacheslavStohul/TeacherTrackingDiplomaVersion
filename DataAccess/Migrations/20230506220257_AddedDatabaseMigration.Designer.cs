@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230506120108_UpdatedLogs")]
-    partial class UpdatedLogs
+    [Migration("20230506220257_AddedDatabaseMigration")]
+    partial class AddedDatabaseMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,9 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("User")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("AccessLevels");
@@ -63,7 +66,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("BanStarter")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ip")
@@ -140,7 +142,7 @@ namespace DataAccess.Migrations
                     b.ToTable("ChairHeads");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Comission", b =>
+            modelBuilder.Entity("DataAccess.Entities.Commission", b =>
                 {
                     b.Property<int>("ComissionId")
                         .ValueGeneratedOnAdd()
@@ -168,7 +170,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Comissions");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.ComissionHead", b =>
+            modelBuilder.Entity("DataAccess.Entities.CommissionHead", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,7 +203,7 @@ namespace DataAccess.Migrations
                     b.ToTable("_CompleteMigrations");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Departament", b =>
+            modelBuilder.Entity("DataAccess.Entities.Department", b =>
                 {
                     b.Property<int>("DepartamentId")
                         .ValueGeneratedOnAdd()
@@ -252,7 +254,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("ObjectTabke")
+                    b.Property<string>("ObjectTable")
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
@@ -264,7 +266,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<DateTime>("Time")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserIdUserInfo")
@@ -507,9 +508,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Head");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Comission", b =>
+            modelBuilder.Entity("DataAccess.Entities.Commission", b =>
                 {
-                    b.HasOne("DataAccess.Entities.Departament", "Departament")
+                    b.HasOne("DataAccess.Entities.Department", "Departament")
                         .WithMany("Comissions")
                         .HasForeignKey("DepartamentId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -517,9 +518,9 @@ namespace DataAccess.Migrations
                     b.Navigation("Departament");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.ComissionHead", b =>
+            modelBuilder.Entity("DataAccess.Entities.CommissionHead", b =>
                 {
-                    b.HasOne("DataAccess.Entities.Comission", "Comission")
+                    b.HasOne("DataAccess.Entities.Commission", "Comission")
                         .WithMany()
                         .HasForeignKey("ComissionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -536,7 +537,7 @@ namespace DataAccess.Migrations
                     b.Navigation("Head");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Departament", b =>
+            modelBuilder.Entity("DataAccess.Entities.Department", b =>
                 {
                     b.HasOne("DataAccess.Entities.Chair", "Chair")
                         .WithMany()
@@ -617,7 +618,7 @@ namespace DataAccess.Migrations
                         .HasForeignKey("ChairId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("DataAccess.Entities.Comission", "Comission")
+                    b.HasOne("DataAccess.Entities.Commission", "Comission")
                         .WithMany()
                         .HasForeignKey("ComissionId")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -645,7 +646,7 @@ namespace DataAccess.Migrations
                     b.Navigation("WorkType");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Departament", b =>
+            modelBuilder.Entity("DataAccess.Entities.Department", b =>
                 {
                     b.Navigation("Comissions");
                 });
