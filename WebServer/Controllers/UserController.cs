@@ -3,6 +3,7 @@ using BusinessCore.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using Newtonsoft.Json;
 
 namespace WebServer.Controllers
@@ -53,6 +54,18 @@ namespace WebServer.Controllers
                 return this.BadRequest(ex.Message);
             }
             
+        }
+
+        [Route("DeleteUser")]
+        public async Task<IActionResult> DelteUserAsync(int id)
+        {
+            return this.BadRequest(new NotImplementedException().Message);
+        }
+
+        [Route("ActivateUser")]
+        public async Task<IActionResult> ActivateUserAsync(int id, string login, string password)
+        {
+            return this.BadRequest(new NotImplementedException().Message);
         }
     }
 }

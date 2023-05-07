@@ -17,6 +17,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserServise, UserServise>();
 builder.Services.AddScoped<ILogRepository, LogRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IServiseRepository, ServiseRepository>();
+builder.Services.AddScoped<ICommissionRepository, CommissionRepository>();
+builder.Services.AddScoped<IChairRepository, ChairRepository>();
 
 var app = builder.Build();
 

@@ -14,7 +14,7 @@ namespace DataAccess.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Name { get; set; }
 
         [MaxLength(100)]

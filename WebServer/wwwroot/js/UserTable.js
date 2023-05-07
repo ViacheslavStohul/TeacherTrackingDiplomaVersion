@@ -1,4 +1,5 @@
-﻿function AddButton() {
+﻿
+function AddButton() {
     window.location = `ChangeUser?id=${-1}`;
 }
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
@@ -20,21 +21,21 @@ document.getElementById('restoreConfirm').addEventListener("click", function (e)
 
 async function DeleteUser() {
     deleteModal.toggle();
-    const query = await fetch(`https://localhost:7113/Main/DeleteUser?id=${Id}`);
+    const query = await fetch(`https://localhost:7113/User/DeleteUser?id=${Id}`);
     window.location = '';
 }
 async function ActivateUser() {
-    const query = await fetch(`https://localhost:7113/Main/ActivateUser?id=${Id}&login=${document.querySelector("#username").value}&password=${document.querySelector("#password").value}`);
+    const query = await fetch(`https://localhost:7113/User/ActivateUser?id=${Id}&login=${document.querySelector("#username").value}&password=${document.querySelector("#password").value}`);
     restoreModal.toggle();
     window.location = '';
 }
 function EditButton(id) {
     window.location = `ChangeUser?id=${id}`;
 }
-function DeleteButton(id) {
+const DeleteButton = id => {
     Id = id;
     deleteModal.toggle();
-}
+};
 function RestoreButton(id) {
     Id = id;
     restoreModal.toggle();

@@ -20,14 +20,7 @@ namespace WebServer.Controllers
         {
             get
             {
-                try
-                {
-                    return this._userService.GetFullUserInfo(JsonConvert.DeserializeObject<UserInfo>(Request.Cookies["user"]));
-                }
-                catch
-                {
-                    return null;
-                }
+                return this._userService.GetFullUserInfo(JsonConvert.DeserializeObject<UserInfo>(Request.Cookies["user"]));
             }
         }
 

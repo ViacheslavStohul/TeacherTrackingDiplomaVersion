@@ -16,5 +16,16 @@ namespace DataAccess.Repositories.Interfaces
         UserInfo GetFullUserInfo(int id);
 
         Task<int> UpdateUserBasicInfo(int id, string firstName, string secondName, string middleName, string phone, string email);
+
+        Task<List<UserInfo>> GetUsersAsync();
+
+        Task<List<UserInfo>> GetUsersByChairAsync(UserInfo user);
+
+        Task<List<UserInfo>> GetUsersByDepartmentAsync(UserInfo user);
+
+        Task<List<UserInfo>> GetUsersByComissionAsync(UserInfo user);
+
+        Task<UserInfo> GetUserInfoByIdAsync(int id);
+
     }
 }

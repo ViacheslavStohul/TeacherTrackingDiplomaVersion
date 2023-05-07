@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
+}
+@using BusinessCore.Models;
+@{
+    UserChangeResponseModel model = ViewBag.Model;
+}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        @{
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        @if (model.User.Id == 0)
+                        {
+                            <h4 class="text-right">Створення користувача</h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-right">Редагування користувача</h4>
+                        }
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Прізвище</label><input id="second_name" type="text" class="form-control" placeholder="Прізвище" value="@(model?.User?.SecondName)"></div>
+                        <div class="col-md-6"><label class="labels">Ім'я</label><input id="first_name" type="text" class="form-control" value="@(model?.User?.FirstName)" placeholder="Ім'я"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">По батькові</label><input id="middle_name" type="text" class="form-control" placeholder="Ім'я по батькові" value="@(model?.User?.MiddleName)"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text" class="form-control" placeholder="Електронна пошта" value="@(model?.User?.Email)"></div>
+                        <div class="col-md-12"><label class="labels">Телефон</label><input id="phone" type="text" class="form-control" placeholder="Телефон" value="@(model?.User?.Phone)"></div>
+                        <div class="col-md-12">
+                            <label class="labels">Звання</label><select id="rank" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model?.User?.Rank)</option>
+                                @foreach (string rank in model.Ranks)
+                                {
+                                    <option>@rank</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Коміссія</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model?.User?.Comission)</option>
+                                @foreach (string comission in model.Commissions)
+                                {
+                                    <option>@comission</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Кафедра</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model?.User?.Chair)</option>
+                                @foreach (string chair in model.Chairs)
+                                {
+                                    <option>@chair</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Тип найму</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model?.User?.WorkType)</option>
+                                @foreach (string workType in model.WorkTypes)
+                                {
+                                    <option>@workType</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Рівень доступу</label><select id="category_access" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model.User.AccessLevel)</option>
+                                @foreach (string access in model.AccessLevels)
+                                {
+                                    <option>@access</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти профіль</button></div>
+                        <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Зміни внесено
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ChangeUser.js" type="module"></script>

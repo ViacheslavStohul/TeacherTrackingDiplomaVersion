@@ -46,7 +46,7 @@ catch { };
 //sidebar
 
 document.querySelector('#mainbtn').addEventListener("click", function() {
-    window.location = "Index";
+    window.location = "index";
 })
 
 document.querySelector('body,html').addEventListener("click", function (e) {

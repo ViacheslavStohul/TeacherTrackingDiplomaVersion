@@ -33,23 +33,19 @@
             <nav class="menu-list bg-dark">
                 <div id="mainbtn"><a href="#">Головна</a></div>
                 @{
-
                     UserFullModel user = ViewBag.User as UserFullModel;
-                    if (user != null)
-                    {
-                        if (user.User.AccessLevel.Chair || user.User.AccessLevel.Comission || user.User.AccessLevel.Departament || user.User.AccessLevel.User)
-                        {
-                            <div id="userbtn"><a href="#">Користувачі</a></div>
-                        }
 
-                        if (user.User.AccessLevel.Name == "Адміністратор")
-                        {
-                            <div id="chairbtn"><a href="#">Кафедри</a></div>
-                            <div id="comissionbtn"><a href="#">Комісії</a></div>
-                            <div id="departbtn"><a href="#">Відділення</a></div>
-                        }
+                    if (user.User.AccessLevel.Chair || user.User.AccessLevel.Comission || user.User.AccessLevel.Departament || user.User.AccessLevel.User)
+                    {
+                        <div id="userbtn"><a href="#">Користувачі</a></div>
                     }
 
+                    if (user.User.AccessLevel.Name == "Адміністратор")
+                    {
+                        <div id="chairbtn"><a href="#">Кафедри</a></div>
+                        <div id="comissionbtn"><a href="#">Комісії</a></div>
+                        <div id="departbtn"><a href="#">Відділення</a></div>
+                    }
                 }
                 <div id="exitbtn"><a href="#">Вийти з системи</a></div>
             </nav>

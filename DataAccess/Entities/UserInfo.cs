@@ -50,6 +50,6 @@ namespace DataAccess.Entities
 
         public Rank? Rank { get; set; }
 
-        public DateTime DeletionDate { get; set; }
+        public DateTime? DeletionDate { get; set; }
     }
 }

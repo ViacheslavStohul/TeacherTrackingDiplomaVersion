@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddedDatabaseMigration : Migration
+    public partial class AddDatabaseStructureMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -85,7 +85,8 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Abbreviation = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +99,8 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Abbreviation = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +133,7 @@ namespace DataAccess.Migrations
                 {
                     ComissionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Abbreviation = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     DepartamentId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -157,7 +159,7 @@ namespace DataAccess.Migrations
                     WorkTypeId = table.Column<int>(type: "int", nullable: true),
                     AccessLevelId = table.Column<int>(type: "int", nullable: false),
                     RankId = table.Column<int>(type: "int", nullable: true),
-                    DeletionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DeletionDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,7 +234,7 @@ namespace DataAccess.Migrations
                 {
                     DepartamentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Abbreviatoin = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ChairId = table.Column<int>(type: "int", nullable: false),
                     HeadIdUserInfo = table.Column<int>(type: "int", nullable: true)
@@ -285,7 +287,7 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserInfoIdUserInfo = table.Column<int>(type: "int", nullable: true)

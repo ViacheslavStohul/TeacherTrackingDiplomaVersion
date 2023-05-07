@@ -1,4 +1,5 @@
-﻿using BusinessCore.Services.Interfaces;
+﻿using BusinessCore.Models;
+using BusinessCore.Services.Interfaces;
 using DataAccess.Entities;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ using System.Web;
 
 namespace WebServer.Controllers
 {
-    [Route("Main")]
     public class MainController : BaseController
     {
         private readonly IUserServise _userService;
@@ -18,18 +18,19 @@ namespace WebServer.Controllers
             _userService = userService;
         }
 
-        [Route("Index")]
         public async Task<IActionResult> Index()
         {
             try
             {
                 ViewBag.User = this.FullUser;
+                return View();
             }
-            catch {}
-            return View();
+            catch {
+                return Redirect("../");
+            }
         }
 
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
         {
             try
             {
@@ -39,9 +40,39 @@ namespace WebServer.Controllers
                 {
                     return new UnauthorizedResult();
                 }
+
+                ViewBag.User = this.FullUser;
+                ViewBag.UserTable = await _userService.GetUsers(user);
+                return View();
             }
-            catch { }
-            return View();
+            catch {
+                return Redirect("../");
+            }
+        }
+
+        public async Task<IActionResult> ChangeUser(int id)
+        {
+            try
+            {
+                UserFullModel user = this.FullUser;
+
+                if(!user.User.AccessLevel.User)
+                {
+                    return new UnauthorizedResult();
+                }
+
+                UserChangeResponseModel model = await _userService.GetDataToChanheUserPage(id);
+
+                ViewBag.User = user;
+
+                ViewBag.Model = model;
+
+                return View();
+            }
+            catch
+            {
+                return Redirect("../");
+            }
         }
 
         public IActionResult Chairs()

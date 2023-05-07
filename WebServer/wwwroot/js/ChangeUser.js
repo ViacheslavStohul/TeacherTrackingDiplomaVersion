@@ -28,10 +28,10 @@ document.getElementById('confirmBtn').addEventListener('click', function () {
 })
 
 async function onSaveClick() {
-    if (id != -1) {
+    if (id !== -1) {
         const query = await fetch(`https://localhost:7113/Main/ChangeUserAdmin?id=${id}&name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
         const status = query.status;
-        if (status != 200) {
+        if (status !== 200) {
             const response = await query.text();
             Toasties.callToast(false, response);
         }
@@ -41,7 +41,7 @@ async function onSaveClick() {
     else {
         const query = await fetch(`https://localhost:7113/Main/AddUser?name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
         const status = query.status;
-        if (status != 200) {
+        if (status !== 200) {
             const response = await query.text();
             Toasties.callToast(false, response);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,12 +18,18 @@ namespace BusinessCore.Services
         private readonly IUserRepository _userRepository;
         private readonly ILogRepository _logRepository;
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IServiseRepository _serviseRepository;
+        private readonly ICommissionRepository _commissionRepository;
+        private readonly IChairRepository _chairRepository;
 
-        public UserServise(IUserRepository repository, ILogRepository logRepository, IDepartmentRepository departmentRepository)
+        public UserServise(IUserRepository user, ILogRepository logRepository, IDepartmentRepository department, IServiseRepository servise, ICommissionRepository commission, IChairRepository chair)
         {
-            _userRepository = repository;
+            _userRepository = user;
             _logRepository = logRepository;
-            _departmentRepository = departmentRepository;
+            _departmentRepository = department;
+            _serviseRepository = servise;
+            _commissionRepository = commission;
+            _chairRepository = chair;
         }
 
         private string HashPassword(string password)
@@ -139,6 +146,73 @@ namespace BusinessCore.Services
         public async Task<int> SignOutAsync(int id, string ip)
         {
             return await _logRepository.LogDataAsync(_userRepository.GetFullUserInfo(id), "unlogged", null, null, ip, 1);
+        }
+
+        public async Task<List<UserTableModel>> GetUsers(UserInfo user)
+        {
+            List<UserTableModel> list = new List<UserTableModel>();
+            if (user.AccessLevel.User)
+            {
+                foreach (UserInfo item in await _userRepository.GetUsersAsync())
+                {
+                    UserTableModel model = new UserTableModel();
+                    model.ToModel(user, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Comission)?.Abbreviatoin);
+                    list.Add(model);
+                }
+                return list;
+            }
+
+            if (user.AccessLevel.Departament)
+            {
+                foreach (UserInfo item in await _userRepository.GetUsersByDepartmentAsync(user))
+                {
+                    UserTableModel model = new UserTableModel();
+                    model.ToModel(user, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Comission)?.Abbreviatoin);
+                    list.Add(model);
+                }
+            }
+
+            if (user.AccessLevel.Chair)
+            {
+                foreach (UserInfo item in await _userRepository.GetUsersByChairAsync(user))
+                {
+                    UserTableModel model = new UserTableModel();
+                    model.ToModel(user, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Comission)?.Abbreviatoin);
+                    list.Add(model);
+                }
+            }
+
+            if(user.AccessLevel.Comission)
+            {
+                foreach (UserInfo item in await _userRepository.GetUsersByComissionAsync(user))
+                {
+                    UserTableModel model = new UserTableModel();
+                    model.ToModel(user, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Comission)?.Abbreviatoin);
+                    list.Add(model);
+                }
+            }
+
+            return list.Distinct().ToList();
+        }
+
+        public async Task<UserChangeResponseModel> GetDataToChanheUserPage(int id)
+        {
+            UserTableModel model = new UserTableModel();
+            UserInfo userInfo = await _userRepository.GetUserInfoByIdAsync(id);
+            if (userInfo != null)
+            {
+                model.ToModel(userInfo, _departmentRepository.GetDepartmentByChairAndComission(userInfo.Chair, userInfo.Comission)?.Abbreviatoin);
+            }
+
+            return new UserChangeResponseModel
+            {
+                User = model,
+                Ranks = (await _serviseRepository.GetRankNamesAsync()).Where(s => s != model?.Rank).ToList(),
+                Commissions = (await _commissionRepository.GetCommissionAbbreviationsAsync()).Where(s => s != model?.Comission).ToList(),
+                Chairs = (await _chairRepository.GetChairAbbreviationsAsync()).Where(s => s != model?.Chair).ToList(),
+                WorkTypes = (await _serviseRepository.GetWorkTypeNamesAsync()).Where(s => s != model?.WorkType).ToList(),
+                AccessLevels = (await _serviseRepository.GetAccessLevelNamesAsync()).Where(s => s != model.AccessLevel).ToList(),
+            };
         }
     }
 }
