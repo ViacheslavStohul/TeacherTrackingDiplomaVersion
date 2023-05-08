@@ -21,5 +21,13 @@ namespace BusinessCore.Services.Interfaces
         Task<List<UserTableModel>> GetUsers(UserInfo user);
 
         Task<UserChangeResponseModel> GetDataToChanheUserPage(int id);
+
+        Task<int> UpdateUserAdmin(UserFullModel mainUser, UserTableModel userModel, string ip);
+
+        Task<int> CreateUser(UserFullModel mainUser, UserTableModel userModel, string ip);
+
+        Task<int> DeleteUserAsync(int id, string ip, UserInfo user);
+
+        Task<int> ActivateUserAsync(int id, string login, string password, string ip, UserInfo user);
     }
 }

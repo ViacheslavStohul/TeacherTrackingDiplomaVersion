@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230507222045_AddDatabaseStructureMigration")]
-    partial class AddDatabaseStructureMigration
+    [Migration("20230508193708_AddedDatabaseMigration")]
+    partial class AddedDatabaseMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,24 +78,6 @@ namespace DataAccess.Migrations
                     b.ToTable("BanLogs");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("DataAccess.Entities.Chair", b =>
                 {
                     b.Property<int>("ChairId")
@@ -155,7 +137,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("DepartamentId")
+                    b.Property<int?>("DepartmentDepartamentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -165,9 +147,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("ComissionId");
 
-                    b.HasIndex("DepartamentId");
+                    b.HasIndex("DepartmentDepartamentId");
 
-                    b.ToTable("Comissions");
+                    b.ToTable("Commissions");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.CommissionHead", b =>
@@ -233,7 +215,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("HeadIdUserInfo");
 
-                    b.ToTable("Departaments");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Log", b =>
@@ -418,13 +400,10 @@ namespace DataAccess.Migrations
                     b.Property<int>("AccessLevelId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ChairId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ComissionId")
+                    b.Property<int?>("CommissionComissionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletionDate")
@@ -465,11 +444,9 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AccessLevelId");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("ChairId");
 
-                    b.HasIndex("ComissionId");
+                    b.HasIndex("CommissionComissionId");
 
                     b.HasIndex("RankId");
 
@@ -522,12 +499,10 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.Commission", b =>
                 {
-                    b.HasOne("DataAccess.Entities.Department", "Departament")
-                        .WithMany("Comissions")
-                        .HasForeignKey("DepartamentId")
+                    b.HasOne("DataAccess.Entities.Department", null)
+                        .WithMany("Commissions")
+                        .HasForeignKey("DepartmentDepartamentId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Departament");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.CommissionHead", b =>
@@ -620,19 +595,14 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("DataAccess.Entities.Chair", "Chair")
                         .WithMany()
                         .HasForeignKey("ChairId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("DataAccess.Entities.Commission", "Comission")
+                    b.HasOne("DataAccess.Entities.Commission", "Commission")
                         .WithMany()
-                        .HasForeignKey("ComissionId")
+                        .HasForeignKey("CommissionComissionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("DataAccess.Entities.Rank", "Rank")
@@ -647,11 +617,9 @@ namespace DataAccess.Migrations
 
                     b.Navigation("AccessLevel");
 
-                    b.Navigation("Category");
-
                     b.Navigation("Chair");
 
-                    b.Navigation("Comission");
+                    b.Navigation("Commission");
 
                     b.Navigation("Rank");
 
@@ -660,7 +628,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.Department", b =>
                 {
-                    b.Navigation("Comissions");
+                    b.Navigation("Commissions");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.UserInfo", b =>

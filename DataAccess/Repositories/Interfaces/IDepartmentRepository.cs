@@ -10,5 +10,7 @@ namespace DataAccess.Repositories.Interfaces
     public interface IDepartmentRepository
     {
         Department GetDepartmentByChairAndComission(Chair chair, Commission commission);
+
+        bool IsChairAndCommissionCorrect(Chair chair, Commission commission);
     }
 }

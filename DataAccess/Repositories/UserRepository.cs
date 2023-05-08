@@ -39,9 +39,8 @@ namespace DataAccess.Repositories
             return this.context.UserInfos
                 .Where(u => u.IdUserInfo == id)
                 .Include(u => u.Chair)
-                .Include(u => u.Comission)
+                .Include(u => u.Commission)
                 .Include(u => u.AccessLevel)
-                .Include(u => u.Category)
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType)
                 .Include(u => u.OrganizationalWorks)
@@ -64,14 +63,14 @@ namespace DataAccess.Repositories
 
         public async Task<List<UserInfo>> GetUsersAsync()
         {
-            return await this.context.UserInfos
+            var a = await this.context.UserInfos
                 .Include(u => u.Chair)
-                .Include(u => u.Comission)
+                .Include(u => u.Commission)
                 .Include(u => u.AccessLevel)
-                .Include(u => u.Category)
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType)
                 .ToListAsync();
+            return a;
         }
 
         public async Task<List<UserInfo>> GetUsersByChairAsync(UserInfo user)
@@ -81,9 +80,8 @@ namespace DataAccess.Repositories
                 return await this.context.UserInfos
                     .Where(u => u.Chair == user.Chair)
                     .Include(u => u.Chair)
-                    .Include(u => u.Comission)
+                    .Include(u => u.Commission)
                     .Include(u => u.AccessLevel)
-                    .Include(u => u.Category)
                     .Include(u => u.Rank)
                     .Include(u => u.WorkType)
                     .ToListAsync();
@@ -96,14 +94,13 @@ namespace DataAccess.Repositories
 
         public async Task<List<UserInfo>> GetUsersByDepartmentAsync(UserInfo user)
         {
-            if (user.Chair != null && user.Comission != null)
+            if (user.Chair != null && user.Commission != null)
             {
                 return await this.context.UserInfos
-                    .Where(u => u.Chair == user.Chair && u.Comission == user.Comission)
+                    .Where(u => u.Chair == user.Chair && this.context.Departments.Any(d => d.Commissions.Contains(user.Commission) && d.Commissions.Contains(u.Commission)))
                     .Include(u => u.Chair)
-                    .Include(u => u.Comission)
+                    .Include(u => u.Commission)
                     .Include(u => u.AccessLevel)
-                    .Include(u => u.Category)
                     .Include(u => u.Rank)
                     .Include(u => u.WorkType)
                     .ToListAsync();
@@ -116,14 +113,13 @@ namespace DataAccess.Repositories
 
         public async Task<List<UserInfo>> GetUsersByComissionAsync(UserInfo user)
         {
-            if (user.Comission != null)
+            if (user.Commission != null)
             {
                 return await this.context.UserInfos
-                    .Where(u => u.Comission == user.Comission)
+                    .Where(u => u.Commission == user.Commission)
                     .Include(u => u.Chair)
-                    .Include(u => u.Comission)
+                    .Include(u => u.Commission)
                     .Include(u => u.AccessLevel)
-                    .Include(u => u.Category)
                     .Include(u => u.Rank)
                     .Include(u => u.WorkType)
                     .ToListAsync();
@@ -139,11 +135,85 @@ namespace DataAccess.Repositories
             return await this.context.UserInfos
                 .Where(u => u.IdUserInfo == id)
                 .Include(u => u.Chair)
-                .Include(u => u.Comission)
+                .Include(u => u.Commission)
                 .Include(u => u.AccessLevel)
-                .Include(u => u.Category)
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> UpdateUserAdminAsync(UserInfo user)
+        {
+            UserInfo toUpdate = this.context.UserInfos.Where(u => u.IdUserInfo == user.IdUserInfo).FirstOrDefault();
+
+            if (toUpdate == null)
+            {
+                throw new Exception("Помилка оновлення. Користувача не знайдено");
+            }
+
+            toUpdate.AccessLevel = user.AccessLevel;
+            toUpdate.Chair = user.Chair;
+            toUpdate.Commission = user.Commission;
+            toUpdate.FirstName = user.FirstName;
+            toUpdate.SecondName = user.SecondName;
+            toUpdate.MiddleName = user.MiddleName;
+            toUpdate.Phone = user.Phone;
+            toUpdate.Email = user.Email;
+            toUpdate.Rank = user.Rank;
+            toUpdate.WorkType = user.WorkType;
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> CreateUserAsync(UserInfo userInfo)
+        {
+            userInfo.DeletionDate = DateTime.Now;
+            this.context.UserInfos.Add(userInfo);
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteUserAsync(int id)
+        {
+            UserInfo toDelete = this.context.UserInfos.Where(u => u.IdUserInfo == id).FirstOrDefault();
+
+            if (toDelete == null)
+            {
+                throw new Exception("Такого користувача не існує");
+            }
+
+            User toRemove = this.context.Users.Where(u => u.IdUser == id).FirstOrDefault();
+
+            this.context.Users.Remove(toRemove);
+
+            toDelete.DeletionDate = DateTime.Now;
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> RestoreUserAsync(int id, string login, string password)
+        {
+            if (this.context.Users.Any(u => u.Login == login))
+            {
+                throw new Exception("Користувач з таким логіном існує");
+            }
+
+            UserInfo info = this.context.UserInfos.Where(u => u.IdUserInfo == id).FirstOrDefault();
+
+            if (info == null)
+            {
+                throw new Exception("Такого користувача не існує");
+            }
+
+            this.context.Users.Add(new User
+            {
+                IdUser = id,
+                Login = login,
+                Password = password
+            });
+
+            info.DeletionDate = null;
+
+            return await this.context.SaveChangesAsync();
         }
     }
 }

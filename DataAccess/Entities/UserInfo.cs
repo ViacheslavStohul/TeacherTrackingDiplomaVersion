@@ -32,11 +32,9 @@ namespace DataAccess.Entities
         [MaxLength(50)]
         public string Phone { get; set; }
 
-        public Category? Category { get; set; }
-
         public Chair? Chair { get; set; }
 
-        public Commission? Comission { get; set; }
+        public Commission? Commission { get; set; }
 
         public WorkType? WorkType { get; set; }
 

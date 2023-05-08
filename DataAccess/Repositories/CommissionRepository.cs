@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories.Interfaces;
+﻿using DataAccess.Entities;
+using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,17 @@ namespace DataAccess.Repositories
 
         public async Task<List<string>> GetCommissionAbbreviationsAsync()
         {
-            return await this.context.Comissions.Select(c => c.Abbreviation).ToListAsync();
+            return await this.context.Commissions.Select(c => c.Abbreviation).ToListAsync();
+        }
+
+        public async Task<List<string>> GetCommissionNamesAsync()
+        {
+            return await this.context.Commissions.Select(c => c.Name).ToListAsync();
+        }
+
+        public async Task<Commission> GetCommissionByNameAsync(string name)
+        {
+            return await this.context.Commissions.Where(c => c.Name == name).FirstOrDefaultAsync();
         }
     }
 }

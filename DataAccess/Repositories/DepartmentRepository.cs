@@ -20,7 +20,13 @@ namespace DataAccess.Repositories
 
         public Department GetDepartmentByChairAndComission(Chair chair, Commission commission)
         {
-            return this.context.Departaments.Where(d => d.Chair == chair && d.Comissions.Contains(commission)).FirstOrDefault();
+            var a = this.context.Departments.Where(d => d.Abbreviatoin == "-").Select(d => d.Commissions);
+            return this.context.Departments.Where(d => d.Chair == chair && d.Commissions.Contains(commission)).FirstOrDefault();
+        }
+        
+        public bool IsChairAndCommissionCorrect(Chair chair, Commission commission)
+        {
+            return this.context.Departments.Any(d => d.Chair == chair && d.Commissions.Contains(commission));
         }
     }
 }

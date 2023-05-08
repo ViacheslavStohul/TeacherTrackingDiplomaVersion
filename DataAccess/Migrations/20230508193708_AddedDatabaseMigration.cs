@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddDatabaseStructureMigration : Migration
+    public partial class AddedDatabaseMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,19 +50,6 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BanLogs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,18 +115,18 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comissions",
+                name: "Commissions",
                 columns: table => new
                 {
                     ComissionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Abbreviation = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    DepartamentId = table.Column<int>(type: "int", nullable: true)
+                    DepartmentDepartamentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comissions", x => x.ComissionId);
+                    table.PrimaryKey("PK_Commissions", x => x.ComissionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,9 +140,8 @@ namespace DataAccess.Migrations
                     MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     ChairId = table.Column<int>(type: "int", nullable: true),
-                    ComissionId = table.Column<int>(type: "int", nullable: true),
+                    CommissionComissionId = table.Column<int>(type: "int", nullable: true),
                     WorkTypeId = table.Column<int>(type: "int", nullable: true),
                     AccessLevelId = table.Column<int>(type: "int", nullable: false),
                     RankId = table.Column<int>(type: "int", nullable: true),
@@ -171,21 +157,15 @@ namespace DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserInfos_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_UserInfos_Chairs_ChairId",
                         column: x => x.ChairId,
                         principalTable: "Chairs",
                         principalColumn: "ChairId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserInfos_Comissions_ComissionId",
-                        column: x => x.ComissionId,
-                        principalTable: "Comissions",
+                        name: "FK_UserInfos_Commissions_CommissionComissionId",
+                        column: x => x.CommissionComissionId,
+                        principalTable: "Commissions",
                         principalColumn: "ComissionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -215,9 +195,9 @@ namespace DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_ComissionHeads", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ComissionHeads_Comissions_ComissionId",
+                        name: "FK_ComissionHeads_Commissions_ComissionId",
                         column: x => x.ComissionId,
-                        principalTable: "Comissions",
+                        principalTable: "Commissions",
                         principalColumn: "ComissionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -229,7 +209,7 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Departaments",
+                name: "Departments",
                 columns: table => new
                 {
                     DepartamentId = table.Column<int>(type: "int", nullable: false)
@@ -241,15 +221,15 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departaments", x => x.DepartamentId);
+                    table.PrimaryKey("PK_Departments", x => x.DepartamentId);
                     table.ForeignKey(
-                        name: "FK_Departaments_Chairs_ChairId",
+                        name: "FK_Departments_Chairs_ChairId",
                         column: x => x.ChairId,
                         principalTable: "Chairs",
                         principalColumn: "ChairId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Departaments_UserInfos_HeadIdUserInfo",
+                        name: "FK_Departments_UserInfos_HeadIdUserInfo",
                         column: x => x.HeadIdUserInfo,
                         principalTable: "UserInfos",
                         principalColumn: "IdUserInfo",
@@ -386,18 +366,18 @@ namespace DataAccess.Migrations
                 column: "HeadIdUserInfo");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comissions_DepartamentId",
-                table: "Comissions",
-                column: "DepartamentId");
+                name: "IX_Commissions_DepartmentDepartamentId",
+                table: "Commissions",
+                column: "DepartmentDepartamentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departaments_ChairId",
-                table: "Departaments",
+                name: "IX_Departments_ChairId",
+                table: "Departments",
                 column: "ChairId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departaments_HeadIdUserInfo",
-                table: "Departaments",
+                name: "IX_Departments_HeadIdUserInfo",
+                table: "Departments",
                 column: "HeadIdUserInfo");
 
             migrationBuilder.CreateIndex(
@@ -426,19 +406,14 @@ namespace DataAccess.Migrations
                 column: "AccessLevelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserInfos_CategoryId",
-                table: "UserInfos",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserInfos_ChairId",
                 table: "UserInfos",
                 column: "ChairId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserInfos_ComissionId",
+                name: "IX_UserInfos_CommissionComissionId",
                 table: "UserInfos",
-                column: "ComissionId");
+                column: "CommissionComissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserInfos_RankId",
@@ -459,10 +434,10 @@ namespace DataAccess.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Comissions_Departaments_DepartamentId",
-                table: "Comissions",
-                column: "DepartamentId",
-                principalTable: "Departaments",
+                name: "FK_Commissions_Departments_DepartmentDepartamentId",
+                table: "Commissions",
+                column: "DepartmentDepartamentId",
+                principalTable: "Departments",
                 principalColumn: "DepartamentId",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -470,8 +445,8 @@ namespace DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Departaments_UserInfos_HeadIdUserInfo",
-                table: "Departaments");
+                name: "FK_Departments_UserInfos_HeadIdUserInfo",
+                table: "Departments");
 
             migrationBuilder.DropTable(
                 name: "_CompleteMigrations");
@@ -507,10 +482,7 @@ namespace DataAccess.Migrations
                 name: "AccessLevels");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Comissions");
+                name: "Commissions");
 
             migrationBuilder.DropTable(
                 name: "Ranks");
@@ -519,7 +491,7 @@ namespace DataAccess.Migrations
                 name: "WorkTypes");
 
             migrationBuilder.DropTable(
-                name: "Departaments");
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Chairs");

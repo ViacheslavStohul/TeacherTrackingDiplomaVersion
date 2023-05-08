@@ -1,4 +1,5 @@
-﻿using DataAccess.Repositories.Interfaces;
+﻿using DataAccess.Entities;
+using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,21 @@ namespace DataAccess.Repositories
         public async Task<List<string>> GetWorkTypeNamesAsync()
         {
             return await this.context.WorkTypes.Select(w => w.Name).ToListAsync();
+        }
+
+        public async Task<AccessLevel> GetAccessLevelByNameAsync(string name)
+        {
+            return await this.context.AccessLevels.Where(l => l.Name == name).FirstOrDefaultAsync();
+        }
+
+        public async Task<WorkType> GetWorkTypeByNameAsync(string name)
+        {
+            return await this.context.WorkTypes.Where(l => l.Name == name).FirstOrDefaultAsync();
+        }
+
+        public async Task<Rank> GetRankTypeByNameAsync(string name)
+        {
+            return await this.context.Ranks.Where(l => l.Name == name).FirstOrDefaultAsync();
         }
     }
 }

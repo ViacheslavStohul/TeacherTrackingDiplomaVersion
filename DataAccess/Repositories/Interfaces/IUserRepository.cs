@@ -27,5 +27,13 @@ namespace DataAccess.Repositories.Interfaces
 
         Task<UserInfo> GetUserInfoByIdAsync(int id);
 
+        Task<int> UpdateUserAdminAsync(UserInfo user);
+
+        Task<int> CreateUserAsync(UserInfo userInfo);
+
+        Task<int> DeleteUserAsync(int id);
+
+        Task<int> RestoreUserAsync(int id, string login, string password);
+
     }
 }

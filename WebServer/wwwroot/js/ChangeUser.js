@@ -5,10 +5,11 @@ const middlename = document.querySelector('#middle_name');
 const email = document.querySelector('#email');
 const phone = document.querySelector('#phone');
 const rank = document.querySelector('#rank');
-const degree = document.querySelector('#academic_degree');
+const commission = document.querySelector('#commission');
 const chair = document.querySelector('#chair');
 const access = document.querySelector('#category_access');
-const paramsString = document.location.search; // ?page=4&limit=10&sortby=desc  
+const workType = document.querySelector('#workType');
+const paramsString = document.location.search; // ?page=4&limit=10&sortby=desc
 const searchParams = new URLSearchParams(paramsString);
 document.querySelector('#saveBtn').addEventListener('click', onSaveClick);
 document.querySelector('#reloadBtn').addEventListener('click', function () {
@@ -28,24 +29,58 @@ document.getElementById('confirmBtn').addEventListener('click', function () {
 })
 
 async function onSaveClick() {
-    if (id !== -1) {
-        const query = await fetch(`https://localhost:7113/Main/ChangeUserAdmin?id=${id}&name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
-        const status = query.status;
-        if (status !== 200) {
-            const response = await query.text();
-            Toasties.callToast(false, response);
-        }
-        else
-            modal.toggle();
+    let data = JSON.stringify({
+        "id": id,
+        "firstName": name.value,
+        "secondName": surname.value,
+        "middleName": middlename.value,
+        "email": email.value,
+        "phone": phone.value,
+        "workType": workType.value,
+        "rank": rank.value,
+        "chair": chair.value,
+        "comission": commission.value,
+        "department": "dep",
+        "accessLevel": access.value
+    });
+    if (id !== "-1") {
+        let url = 'https://localhost:7113/User/ChangeUserAdmin';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: data
+        })
+            .then(function(response) {
+                if (response.ok) {
+                    modal.toggle();
+                } else {
+                    response.text()
+                        .then(function (errorMessage) {
+                            Toasties.callToast(false, errorMessage);
+                        });
+                }
+            });
     }
     else {
-        const query = await fetch(`https://localhost:7113/Main/AddUser?name=${name.value}&surname=${surname.value}&middlename=${middlename.value}&phone=${phone.value}&email=${email.value}&rank=${rank.value}&degree=${degree.value}&chair=${chair.value}&level=${access.value}`);
-        const status = query.status;
-        if (status !== 200) {
-            const response = await query.text();
-            Toasties.callToast(false, response);
-        }
-        else
-            modal.toggle();
+        let url = 'https://localhost:7113/User/AddUser';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: data
+        })
+            .then(function(response) {
+                if (response.ok) {
+                    modal.toggle();
+                } else {
+                    response.text()
+                        .then(function (errorMessage) {
+                            Toasties.callToast(false, errorMessage);
+                        });
+                }
+            });
     }
 }

@@ -20,7 +20,5 @@ namespace DataAccess.Entities
 
         [MaxLength(20)]
         public string Abbreviation { get; set; }
-
-        public Department? Departament { get; set; }
     }
 }

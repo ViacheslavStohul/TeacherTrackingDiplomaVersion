@@ -20,7 +20,7 @@ namespace DataAccess.Entities
         [MaxLength(20)]
         public string Abbreviatoin { get; set; }
 
-        public ICollection<Commission> Comissions { get; set; }
+        public ICollection<Commission> Commissions { get; set; }
 
         public Chair Chair { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,11 @@ namespace DataAccess.Repositories.Interfaces
         Task<List<string>> GetAccessLevelNamesAsync();
 
         Task<List<string>> GetWorkTypeNamesAsync();
+
+        Task<AccessLevel> GetAccessLevelByNameAsync(string name);
+
+        Task<WorkType> GetWorkTypeByNameAsync(string name);
+
+        Task<Rank> GetRankTypeByNameAsync(string name);
     }
 }

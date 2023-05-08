@@ -56,7 +56,7 @@ namespace WebServer.Controllers
             {
                 UserFullModel user = this.FullUser;
 
-                if(!user.User.AccessLevel.User)
+                if(!user.User.AccessLevel.User && !user.User.AccessLevel.Chair && !user.User.AccessLevel.Departament && !user.User.AccessLevel.Comission)
                 {
                     return new UnauthorizedResult();
                 }
@@ -100,8 +100,7 @@ namespace WebServer.Controllers
                 return View();
         }
 
-        [Route("Exit")]
-        public async Task<IActionResult> ExitAsync(int id)
+        public async Task<IActionResult> Exit(int id)
         {
             await _userService.SignOutAsync(id, this.Ip);
             return Redirect("../");

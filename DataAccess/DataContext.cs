@@ -32,13 +32,11 @@ namespace DataAccess
 
         public DbSet<AccessLevel> AccessLevels { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
-
         public DbSet<Chair> Chairs { get; set; }
 
-        public DbSet<Commission> Comissions { get; set; }
+        public DbSet<Commission> Commissions { get; set; }
 
-        public DbSet<Department> Departaments { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         public DbSet<Methodical> Methodicals { get; set; }
 

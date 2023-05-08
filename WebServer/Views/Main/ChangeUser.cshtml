@@ -43,7 +43,7 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <label class="labels">Коміссія</label><select id="academic_degree" class="form-select" aria-label="Виберіть зі списку">
+                            <label class="labels">Коміссія</label><select id="commission" class="form-select" aria-label="Виберіть зі списку">
                                 <option selected>@(model?.User?.Comission)</option>
                                 @foreach (string comission in model.Commissions)
                                 {
@@ -61,7 +61,7 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <label class="labels">Тип найму</label><select id="chair" class="form-select" aria-label="Виберіть зі списку">
+                            <label class="labels">Тип найму</label><select id="workType" class="form-select" aria-label="Виберіть зі списку">
                                 <option selected>@(model?.User?.WorkType)</option>
                                 @foreach (string workType in model.WorkTypes)
                                 {

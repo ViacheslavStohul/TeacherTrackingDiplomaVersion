@@ -21,12 +21,13 @@ namespace DataAccess
             {
                 try
                 {
-                    updatedRowsCount += await CreateAdminAccount(completeMigrations);
-                    updatedRowsCount += await CreateComputerComission(completeMigrations);
-                    updatedRowsCount += await CreateComputerChair(completeMigrations);
+                    updatedRowsCount += await CreateInitialComissions(completeMigrations);
+                    updatedRowsCount += await CreateInitialChairs(completeMigrations);
+                    updatedRowsCount += await CreateInitalDepartments(completeMigrations);
                     updatedRowsCount += await CreateAccessLevels(completeMigrations);
-                    updatedRowsCount += await CreateRanks(completeMigrations);
-                    updatedRowsCount += await CreateWorkTypes(completeMigrations);
+                    updatedRowsCount += await CreateInitialRanks(completeMigrations);
+                    updatedRowsCount += await CreateInitialTypes(completeMigrations);
+                    updatedRowsCount += await CreateAdminAccount(completeMigrations);
                     dbContextTransaction.Commit();
                     return updatedRowsCount;
                 }
@@ -57,13 +58,19 @@ namespace DataAccess
             return 0;
         }
 
-        private async Task<int> CreateComputerComission(List<CompleteMigration> completeMigrations)
+        private async Task<int> CreateInitialComissions(List<CompleteMigration> completeMigrations)
         {
             string migrationId = "A2015EA1-EB69-4D91-84B8-32FCB3ACF777";
 
             if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
             {
-                this.Comissions.Add(new Commission
+                this.Commissions.Add(new Commission
+                {
+                    Name = "Відсутня",
+                    Abbreviation = "-"
+                });
+
+                this.Commissions.Add(new Commission
                 {
                     Name = "Комісія комп'ютерних технологій та програмної інженерії",
                     Abbreviation = "КТ та ПІ"
@@ -77,12 +84,18 @@ namespace DataAccess
             return 0;
         }
 
-        private async Task<int> CreateComputerChair(List<CompleteMigration> completeMigrations)
+        private async Task<int> CreateInitialChairs(List<CompleteMigration> completeMigrations)
         {
             string migrationId = "A6583DB2-4C80-401B-A807-F3EE05042F95";
 
             if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
             {
+                this.Chairs.Add(new Chair
+                {
+                    Name = "Відсутня",
+                    Abbreviation = "-",
+                });
+
                 this.Chairs.Add(new Chair
                 {
                     Name = "Кафедра комп'ютерної інженерії",
@@ -97,17 +110,25 @@ namespace DataAccess
             return 0;
         }
 
-        private async Task<int> CreateComputerDepartment(List<CompleteMigration> completeMigrations)
+        private async Task<int> CreateInitalDepartments(List<CompleteMigration> completeMigrations)
         {
             string migrationId = "921540D6-F8ED-4518-A326-470CDDAC1D35";
 
             if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
             {
-                this.Departaments.Add(new Department
+                this.Departments.Add(new Department
+                {
+                    Name = "Відсутнє",
+                    Abbreviatoin = "-",
+                    Commissions = this.Commissions.Where(c => c.Abbreviation == "-").ToList(),
+                    Chair = this.Chairs.Where(ch => ch.Name == "Відсутня").FirstOrDefault()
+                });
+
+                this.Departments.Add(new Department
                 {
                     Name = "Відділення комп'ютерних систем",
                     Abbreviatoin = "КС",
-                    Comissions = this.Comissions.Where(c => c.Abbreviation == "КТ та ПІ").ToList(),
+                    Commissions = this.Commissions.Where(c => c.Abbreviation == "КТ та ПІ").ToList(),
                     Chair = this.Chairs.Where(ch => ch.Name == "Кафедра комп'ютерної інженерії").FirstOrDefault()
                 });
 
@@ -162,12 +183,18 @@ namespace DataAccess
             return 0;
         }
 
-        public async Task<int> CreateRanks(List<CompleteMigration> completeMigrations)
+        public async Task<int> CreateInitialRanks(List<CompleteMigration> completeMigrations)
         {
             string migrationId = "81416C46-0DC4-4DF1-9B12-19548F1944D7";
 
             if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
             {
+                this.Ranks.Add(new Rank
+                {
+                    Name = "Не вказано",
+                    Abbreviation = "Н/В"
+                });
+
                 this.Ranks.Add(new Rank
                 {
                     Name = "Викладач другої категорії",
@@ -194,12 +221,18 @@ namespace DataAccess
             return 0;
         }
 
-        private async Task<int> CreateWorkTypes(List<CompleteMigration> completeMigrations)
+        private async Task<int> CreateInitialTypes(List<CompleteMigration> completeMigrations)
         {
             string migrationId = "75AA89FE-455C-416F-8691-9BC842F92D9D";
 
             if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
             {
+                this.WorkTypes.Add(new WorkType
+                {
+                    Name = "Не вказано",
+                    Abbreviation = "Н/В"
+                });
+
                 this.WorkTypes.Add(new WorkType
                 {
                     Name = "Штатний викладач",
@@ -259,7 +292,11 @@ namespace DataAccess
                 MiddleName = "Admin",
                 Email = "testAdmin@admin.com",
                 Phone = "+380000000000",
-                AccessLevel = this.AccessLevels.FirstOrDefault()
+                Chair = this.Chairs.Where(ch => ch.Abbreviation == "-").FirstOrDefault(),
+                Commission = this.Commissions.Where(c => c.Abbreviation == "-").FirstOrDefault(),
+                WorkType = this.WorkTypes.Where(w => w.Name == "Не вказано").FirstOrDefault(),
+                Rank = this.Ranks.Where(w => w.Name == "Не вказано").FirstOrDefault(),
+                AccessLevel = this.AccessLevels.Where(a => a.Name == "Адміністратор").FirstOrDefault()
             });
 
             return await this.SaveChangesAsync();
