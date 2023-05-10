@@ -20,6 +20,7 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IServiseRepository, ServiseRepository>();
 builder.Services.AddScoped<ICommissionRepository, CommissionRepository>();
 builder.Services.AddScoped<IChairRepository, ChairRepository>();
+builder.Services.AddScoped<ICommissionServise, CommissionServise>();
 
 var app = builder.Build();
 

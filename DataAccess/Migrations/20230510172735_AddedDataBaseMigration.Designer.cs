@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230508193708_AddedDatabaseMigration")]
-    partial class AddedDatabaseMigration
+    [Migration("20230510172735_AddedDataBaseMigration")]
+    partial class AddedDataBaseMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -260,37 +260,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Methodical", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("UserInfoIdUserInfo")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserInfoIdUserInfo");
-
-                    b.ToTable("Methodicals");
-                });
-
             modelBuilder.Entity("DataAccess.Entities.OrganizationalWork", b =>
                 {
                     b.Property<int>("Id")
@@ -303,9 +272,13 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("OrganizationType")
                         .HasColumnType("int");
@@ -318,32 +291,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("UserInfoIdUserInfo");
 
                     b.ToTable("OrganizationalWorks");
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Qualification", b =>
-                {
-                    b.Property<int>("QualificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QualificationId"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserInfoIdUserInfo")
-                        .HasColumnType("int");
-
-                    b.HasKey("QualificationId");
-
-                    b.HasIndex("UserInfoIdUserInfo");
-
-                    b.ToTable("Qualifications");
                 });
 
             modelBuilder.Entity("DataAccess.Entities.Rank", b =>
@@ -552,26 +499,10 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Methodical", b =>
-                {
-                    b.HasOne("DataAccess.Entities.UserInfo", null)
-                        .WithMany("MethodicalWorks")
-                        .HasForeignKey("UserInfoIdUserInfo")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("DataAccess.Entities.OrganizationalWork", b =>
                 {
                     b.HasOne("DataAccess.Entities.UserInfo", null)
                         .WithMany("OrganizationalWorks")
-                        .HasForeignKey("UserInfoIdUserInfo")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("DataAccess.Entities.Qualification", b =>
-                {
-                    b.HasOne("DataAccess.Entities.UserInfo", null)
-                        .WithMany("Qualifications")
                         .HasForeignKey("UserInfoIdUserInfo")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
@@ -633,11 +564,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.UserInfo", b =>
                 {
-                    b.Navigation("MethodicalWorks");
-
                     b.Navigation("OrganizationalWorks");
-
-                    b.Navigation("Qualifications");
 
                     b.Navigation("User");
                 });

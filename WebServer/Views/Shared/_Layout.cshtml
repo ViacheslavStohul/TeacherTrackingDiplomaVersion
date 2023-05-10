@@ -40,8 +40,8 @@
                         <div id="userbtn"><a href="#">Користувачі</a></div>
                     }
 
-                    if (user.User.AccessLevel.Name == "Адміністратор")
-                    {
+                    if (user.User.AccessLevel.Chair && user.User.AccessLevel.Comission && user.User.AccessLevel.Departament && user.User.AccessLevel.User)
+                        {
                         <div id="chairbtn"><a href="#">Кафедри</a></div>
                         <div id="comissionbtn"><a href="#">Комісії</a></div>
                         <div id="departbtn"><a href="#">Відділення</a></div>

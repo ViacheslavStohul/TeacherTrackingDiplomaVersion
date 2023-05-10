@@ -29,11 +29,17 @@ namespace DataAccess.Repositories.Interfaces
 
         Task<int> UpdateUserAdminAsync(UserInfo user);
 
-        Task<int> CreateUserAsync(UserInfo userInfo);
+        Task<UserInfo> CreateUserAsync(UserInfo userInfo);
 
         Task<int> DeleteUserAsync(int id);
 
         Task<int> RestoreUserAsync(int id, string login, string password);
+
+        Task<int> UpdateUsersCommission(Commission commission);
+
+        Task<int> SetCommissionHead(string name, Commission commission);
+
+        Task<int> RemoveCommissionHead(string name, Commission commission);
 
     }
 }

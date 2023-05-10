@@ -38,11 +38,7 @@ namespace DataAccess
 
         public DbSet<Department> Departments { get; set; }
 
-        public DbSet<Methodical> Methodicals { get; set; }
-
         public DbSet<OrganizationalWork> OrganizationalWorks { get; set; }
-
-        public DbSet<Qualification> Qualifications { get; set; }
 
         public DbSet<Rank> Ranks { get; set; }
 

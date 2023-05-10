@@ -12,5 +12,11 @@ namespace DataAccess.Repositories.Interfaces
         Department GetDepartmentByChairAndComission(Chair chair, Commission commission);
 
         bool IsChairAndCommissionCorrect(Chair chair, Commission commission);
+
+        Task<Department> GetDepartmentByCommission(Commission commission);
+
+        List<string> GetDepartmentNames();
+
+        Task<int> UpdateDepartmentCommission(Commission commission, string newDepartment);
     }
 }

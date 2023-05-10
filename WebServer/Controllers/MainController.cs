@@ -12,10 +12,12 @@ namespace WebServer.Controllers
     public class MainController : BaseController
     {
         private readonly IUserServise _userService;
-        public MainController(IUserServise userService)
+        private readonly ICommissionServise _commissionService;
+        public MainController(IUserServise userService, ICommissionServise commissionService)
             : base(userService)
         {
             _userService = userService;
+            _commissionService = commissionService; 
         }
 
         public async Task<IActionResult> Index()
@@ -84,12 +86,50 @@ namespace WebServer.Controllers
                 return View();
         }
 
-        public IActionResult Institutes()
+        public async Task<IActionResult> Commissions()
         {
-            if (Request.Cookies["inst_priv"] != "true")
-                return new UnauthorizedResult();
-            else
+            try
+            {
+                UserInfo user = this.FullUser.User;
+
+                if (!user.AccessLevel.User || !user.AccessLevel.Chair || !user.AccessLevel.Comission || !user.AccessLevel.Departament)
+                {
+                    return new UnauthorizedResult();
+                }
+
+                ViewBag.User = this.FullUser;
+                ViewBag.CommissionsTable = await _commissionService.GetCommissionTableAsync();
                 return View();
+            }
+            catch
+            {
+                return Redirect("../");
+            }
+        }
+
+        public async Task<IActionResult> ChangeCommission(int id)
+        {
+            try
+            {
+                UserFullModel user = this.FullUser;
+
+                if (!user.User.AccessLevel.User || !user.User.AccessLevel.Chair || !user.User.AccessLevel.Departament || !user.User.AccessLevel.Comission)
+                {
+                    return new UnauthorizedResult();
+                }
+
+                CommissionChangeResponseModel model = await _commissionService.GetDataToChangeCommisionPageAsync(id);
+
+                ViewBag.User = user;
+
+                ViewBag.Model = model;
+
+                return View();
+            }
+            catch
+            {
+                return Redirect("../");
+            }
         }
 
         public IActionResult Faculties()

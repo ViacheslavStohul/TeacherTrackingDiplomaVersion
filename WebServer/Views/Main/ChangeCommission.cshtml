@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Курсова робота";
+    Layout = "_Layout";
+}
+@using BusinessCore.Models;
+@{
+    CommissionChangeResponseModel model = ViewBag.Model;
+}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        @{
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        @if (model.Model.Id == 0)
+                        {
+                            <h4 class="text-right">Створення коміії</h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-right">Редагування комісії</h4>
+                        }
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Назва</label><input id="name" type="text" class="form-control" placeholder="Назва" value="@(model?.Model?.Name)"></div>
+                        <div class="col-md-12"><label class="labels">Аббревіація</label><input id="abbreviation" type="text" class="form-control" placeholder="Аббревіація" value="@(model?.Model?.Abbreviation)"></div>
+                        <div class="col-md-12">
+                            <label class="labels">Відділення</label><select id="department" class="form-select" aria-label="Виберіть зі списку">
+                                <option selected>@(model?.Model?.Department)</option>
+                                @foreach (string department in model.Departments)
+                                {
+                                    <option>@department</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Голова</label>
+                            <input id="director" list="chiefs" type="text" class="form-control" placeholder="Голова" value="@(model?.Model?.Head)">
+                            <datalist id="chiefs">
+                                @foreach (object user in model.Users)
+                                {
+                                    <option value="@user"></option>
+                                }
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти</button></div>
+                        <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
+                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Увага</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Зміни внесено
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/ChangeCommission.js" type="module"></script>

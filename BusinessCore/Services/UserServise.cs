@@ -308,9 +308,10 @@ namespace BusinessCore.Services
                 throw new Exception("Ви не можете надавати цей рівень доступу");
             }
 
-            await _logRepository.LogDataAsync(mainUser.User, "created", "new user", "UserInfos", ip, 1);
+            info = await _userRepository.CreateUserAsync(info);
 
-            return await _userRepository.CreateUserAsync(info);
+            return await _logRepository.LogDataAsync(mainUser.User, "created", info.IdUserInfo.ToString(), "UserInfos", ip, 1);
+
         }
 
         public async Task<int> DeleteUserAsync(int id, string ip, UserInfo user)
@@ -320,7 +321,7 @@ namespace BusinessCore.Services
                 throw new Exception("Неможливо видалити власний запис");
             }
 
-            await _logRepository.LogDataAsync(user, "created", id.ToString(), "UserInfos", ip, 1);
+            await _logRepository.LogDataAsync(user, "deleted", id.ToString(), "UserInfos", ip, 1);
             return await _userRepository.DeleteUserAsync(id);
         }
 

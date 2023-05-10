@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class AddedDatabaseMigration : Migration
+    public partial class AddedDataBaseMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -262,35 +262,14 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Methodicals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserInfoIdUserInfo = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Methodicals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Methodicals_UserInfos_UserInfoIdUserInfo",
-                        column: x => x.UserInfoIdUserInfo,
-                        principalTable: "UserInfos",
-                        principalColumn: "IdUserInfo",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrganizationalWorks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrganizationType = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserInfoIdUserInfo = table.Column<int>(type: "int", nullable: true)
                 },
@@ -299,27 +278,6 @@ namespace DataAccess.Migrations
                     table.PrimaryKey("PK_OrganizationalWorks", x => x.Id);
                     table.ForeignKey(
                         name: "FK_OrganizationalWorks_UserInfos_UserInfoIdUserInfo",
-                        column: x => x.UserInfoIdUserInfo,
-                        principalTable: "UserInfos",
-                        principalColumn: "IdUserInfo",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Qualifications",
-                columns: table => new
-                {
-                    QualificationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserInfoIdUserInfo = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Qualifications", x => x.QualificationId);
-                    table.ForeignKey(
-                        name: "FK_Qualifications_UserInfos_UserInfoIdUserInfo",
                         column: x => x.UserInfoIdUserInfo,
                         principalTable: "UserInfos",
                         principalColumn: "IdUserInfo",
@@ -386,18 +344,8 @@ namespace DataAccess.Migrations
                 column: "UserIdUserInfo");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Methodicals_UserInfoIdUserInfo",
-                table: "Methodicals",
-                column: "UserInfoIdUserInfo");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrganizationalWorks_UserInfoIdUserInfo",
                 table: "OrganizationalWorks",
-                column: "UserInfoIdUserInfo");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Qualifications_UserInfoIdUserInfo",
-                table: "Qualifications",
                 column: "UserInfoIdUserInfo");
 
             migrationBuilder.CreateIndex(
@@ -464,13 +412,7 @@ namespace DataAccess.Migrations
                 name: "Logs");
 
             migrationBuilder.DropTable(
-                name: "Methodicals");
-
-            migrationBuilder.DropTable(
                 name: "OrganizationalWorks");
-
-            migrationBuilder.DropTable(
-                name: "Qualifications");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -44,8 +44,6 @@ namespace DataAccess.Repositories
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType)
                 .Include(u => u.OrganizationalWorks)
-                .Include(u => u.Qualifications)
-                .Include(u => u.MethodicalWorks)
                 .FirstOrDefault();
         }
 
@@ -164,12 +162,18 @@ namespace DataAccess.Repositories
             return await this.context.SaveChangesAsync();
         }
 
-        public async Task<int> CreateUserAsync(UserInfo userInfo)
+        public async Task<UserInfo> CreateUserAsync(UserInfo userInfo)
         {
+            if(this.context.UserInfos.Any(u => u.FirstName.ToLower() == userInfo.FirstName.ToLower() && u.SecondName.ToLower() == userInfo.SecondName.ToLower() && userInfo.MiddleName.ToLower() == userInfo.MiddleName.ToLower()))
+            {
+                throw new Exception("Такий користувач вже існує");
+            }
             userInfo.DeletionDate = DateTime.Now;
             this.context.UserInfos.Add(userInfo);
 
-            return await this.context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
+
+            return userInfo;
         }
 
         public async Task<int> DeleteUserAsync(int id)
@@ -212,6 +216,59 @@ namespace DataAccess.Repositories
             });
 
             info.DeletionDate = null;
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateUsersCommission(Commission commission)
+        {
+            IQueryable<UserInfo> users = this.context.UserInfos.Where(u => u.Commission == commission);
+
+            foreach(UserInfo user in users)
+            {
+                user.Chair = this.context.Departments.Where(d => d.Commissions.Contains(commission)).Select(d => d.Chair).FirstOrDefault();
+            }
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> SetCommissionHead(string name, Commission commission)
+        {
+            UserInfo user = this.context.UserInfos.Where(u => u.SecondName + " " + u.FirstName == name).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new Exception("Такого користувача не існує");
+            }
+
+            CommissionHead commissionHead = this.context.ComissionHeads.Where(c => c.Comission == commission).FirstOrDefault();
+
+            if (commissionHead == null)
+            {
+                this.context.ComissionHeads.Add(new CommissionHead
+                {
+                    Comission = commission,
+                    Head = user
+                });
+            }
+
+            else
+            {
+                commissionHead.Head = user;
+            }
+
+            return await this.context.SaveChangesAsync();
+
+        }
+
+        public async Task<int> RemoveCommissionHead(string name, Commission commission)
+        {
+            CommissionHead commissionHead = this.context.ComissionHeads.Where(c => c.Comission == commission).FirstOrDefault();
+
+            if (commissionHead != null)
+            {
+                this.context.ComissionHeads.Remove(commissionHead);
+            }
 
             return await this.context.SaveChangesAsync();
         }

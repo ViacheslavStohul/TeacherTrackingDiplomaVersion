@@ -38,11 +38,7 @@ namespace DataAccess.Entities
 
         public WorkType? WorkType { get; set; }
 
-        public ICollection<Methodical> MethodicalWorks { get; set; }
-
         public ICollection<OrganizationalWork> OrganizationalWorks { get; set; }
-
-        public ICollection<Qualification> Qualifications { get; set; }
 
         public AccessLevel AccessLevel { get; set; }
 

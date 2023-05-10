@@ -20,5 +20,8 @@ namespace DataAccess.Entities
 
         [MaxLength(20)]
         public string Abbreviation { get; set; }
+
+        [NotMapped]
+        public UserInfo Head { get; set; }
     }
 }

@@ -9,11 +9,15 @@ namespace DataAccess
 {
     public enum OrganizationType
     {
-        [Description("Олімпіади")]
+        [Description("Олімпіада")]
         Olempyada = 1,
-        [Description("Статті")]
-        Articles = 2,
-        [Description("Конференції")]
-        Meetings = 3
+        [Description("Стаття")]
+        Article = 2,
+        [Description("Конференція")]
+        Meeting = 3,
+        [Description("Підвищення кваліфікації")]
+        Qualification = 4,
+        [Description("Методична розробка")]
+        Methodical = 5
     }
 }

@@ -14,5 +14,15 @@ namespace DataAccess.Repositories.Interfaces
         Task<List<string>> GetCommissionNamesAsync();
 
         Task<Commission> GetCommissionByNameAsync(string name);
+
+        Task<List<Commission>> GetCommissions();
+
+        Task<Commission> GetCommisionByIdAsync(int id);
+
+        Task<int> UpdateCommissionAsync(Commission commission);
+
+        Task<Commission> CreateCommissionAsync(Commission commission);
+
+        Task<int> DeleteCommissionAsync(Commission commission);
     }
 }
