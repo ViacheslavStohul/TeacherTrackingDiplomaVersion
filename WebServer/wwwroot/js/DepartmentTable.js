@@ -1,5 +1,5 @@
 ﻿function AddButton() {
-    window.location = `ChangeChair?id=${-1}`;
+    window.location = `ChangeDepartment?id=${-1}`;
 }
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
 
@@ -16,7 +16,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 
 async function DeleteCommission() {
     deleteModal.toggle();
-    const query = await fetch(`https://localhost:7113/Chair/DeleteChair?id=${_Id}`);
+    const query = await fetch(`https://localhost:7113/Department/DeleteDepartment?id=${_Id}`);
     if (query.status !== 200) {
         const response = await query.text();
         callToast(false, response);
@@ -25,7 +25,7 @@ async function DeleteCommission() {
         window.location.reload();
 }
 function EditButton(id) {
-    window.location = `ChangeChair?id=${id}`;
+    window.location = `ChangeDepartment?id=${id}`;
 }
 
 function callToast(headerresult, message) {

@@ -1,4 +1,4 @@
-﻿import * as Toasties from "../js/common.js";
+import * as Toasties from "../js/common.js";
 const name = document.querySelector('#name');
 const abbr = document.querySelector('#abbreviation');
 const department = document.querySelector('#department');
@@ -14,12 +14,12 @@ let id = searchParams.get("id"); // 4
 let modal = new bootstrap.Modal(document.getElementById('operation_success'), { backdrop: true, keyboard: true, focus: true });
 
 document.getElementById('operation_success').addEventListener('hidden.bs.modal', function (event) {
-    window.location = "Chairs";
+    window.location = "Works";
 })
 
 document.getElementById('confirmBtn').addEventListener('click', function () {
     modal.toggle();
-    window.location = "Chairs";
+    window.location = "Works";
 })
 
 async function onSaveClick() {

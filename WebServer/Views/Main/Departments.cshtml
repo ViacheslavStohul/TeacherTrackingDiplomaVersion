@@ -1,10 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Курсова робота";
+    ViewData["Title"] = "Дипломна робота";
     Layout = "_Layout";
 }
 @using BusinessCore.Models;
 @{
-    List<CommissionTableModel> commissions = ViewBag.CommissionsTable as List<CommissionTableModel>;
+    List<DepartmentTableModel> chairs = ViewBag.DepartmentTable as List<DepartmentTableModel>;
 }
 
 <div class="container rounded bg-white mt-5 mb-5">
@@ -17,19 +17,17 @@
                             <th scope="col"> </th>
                             <th scope="col">Назва</th>
                             <th scope="col">Аббривіація</th>
-                            <th scope="col">Відділення</th>
                             <th scope="col">Завідуючий</th>
                             <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:220px" onclick="AddButton()">Додати</button></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (CommissionTableModel row in commissions)
+                        @foreach (DepartmentTableModel row in chairs)
                         {
                             <tr>
                                 <th scope="row">@row.Id</th>
                                 <td>@row.Name</td>
                                 <td>@row.Abbreviation</td>
-                                <td>@row.Department</td>
                                 <td>@row?.Head</td>
                                 <td style="width:240px;">
                                     <button class="btn btn-success" type="button" onclick="EditButton(@row.Id.ToString())">Редагувати</button>
@@ -52,7 +50,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Чи дійсно хочете видалити комісію?
+                Чи дійсно хочете видалити відділення?
             </div>
             <div class="modal-footer">
                 <button type="button" id="confirmDeleteBtn" class="btn btn-success">Так</button>
@@ -62,5 +60,5 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="~/js/CommissionsTable.js"></script>
+<script src="~/js/DepartmentTable.js"></script>
 

@@ -85,7 +85,7 @@ namespace BusinessCore.Services
                 Abbreviation = model.Abbreviation,
             });
 
-            await _departmentRepository.UpdateDepartmentCommission(commission, model.Department);
+            await _departmentRepository.UpdateDepartmentCommissionAsync(commission, model.Department);
 
             return await _logRepository.LogDataAsync(user, "updated", model.Id.ToString(), "Commissions", ip, 1);
         }
@@ -103,7 +103,7 @@ namespace BusinessCore.Services
                 await _userRepository.SetCommissionHead(model.Head, commission);
             }
 
-            await _departmentRepository.UpdateDepartmentCommission(commission, model.Department);
+            await _departmentRepository.UpdateDepartmentCommissionAsync(commission, model.Department);
 
             return await _logRepository.LogDataAsync(user, "created", commission.ComissionId.ToString(), "Commissions", ip, 1);
         }

@@ -5,20 +5,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
 {
-    [Route("Commission")]
-    public class CommissionController : BaseController
+    [Route("Chair")]
+    public class ChairController : BaseController
     {
-        private readonly ICommissionServise _commissionServise;
+        private readonly IUserServise _userServise;
+        private readonly IChairServise _chairServise;
 
-        public CommissionController(IUserServise _userServise, ICommissionServise commissionServise)
-            : base(_userServise)
+        public ChairController(IUserServise userServise, IChairServise chairServise)
+            :base(userServise)
         {
-            _commissionServise = commissionServise;
+            _chairServise = chairServise;
         }
 
-        [Route("DeleteCommission")]
+        [Route("DeleteChair")]
         [HttpGet]
-        public async Task<IActionResult> DeleteCommisionAsync(int id)
+        public async Task<IActionResult> DeleteChairAsync(int id)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace WebServer.Controllers
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.DeleteCommissionAsync(id, user.User, this.Ip));
+                return this.Ok(await _chairServise.DeleteChairAsync(id, user.User, this.Ip));
             }
             catch (Exception ex)
             {
@@ -41,9 +42,9 @@ namespace WebServer.Controllers
             }
         }
 
-        [Route("UpdateCommission")]
+        [Route("UpdateChair")]
         [HttpPost]
-        public async Task<IActionResult> UpdateCommissionAsync([FromBody] CommissionTableModel model) 
+        public async Task<IActionResult> UpdateChairAsync([FromBody] ChairTableModel model)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace WebServer.Controllers
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.UpdateCommissionAsync(model, user.User, this.Ip));
+                return this.Ok(await _chairServise.UpdateChairAsync(model, user.User, this.Ip));
             }
             catch (Exception ex)
             {
@@ -66,9 +67,9 @@ namespace WebServer.Controllers
             }
         }
 
-        [Route("AddCommission")]
+        [Route("AddChair")]
         [HttpPost]
-        public async Task<IActionResult> AddCommission([FromBody] CommissionTableModel model)
+        public async Task<IActionResult> AddChairAsync([FromBody] ChairTableModel model)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace WebServer.Controllers
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.CreateCommissionAsync(model, user.User, this.Ip));
+                return this.Ok(await _chairServise.AddChairAsync(model, user.User, this.Ip));
             }
             catch (Exception ex)
             {

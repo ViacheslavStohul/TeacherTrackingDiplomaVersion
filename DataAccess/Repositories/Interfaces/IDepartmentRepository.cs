@@ -17,6 +17,20 @@ namespace DataAccess.Repositories.Interfaces
 
         List<string> GetDepartmentNames();
 
-        Task<int> UpdateDepartmentCommission(Commission commission, string newDepartment);
+        Task<int> UpdateDepartmentCommissionAsync(Commission commission, string newDepartment);
+
+        Task<Department> GetDepartmentByNameAsync(string name);
+
+        Task<int> DeleteChairFromDepartmentAsync(Chair chair);
+
+        Task<List<Department>> GetDepartmentsAsync();
+
+        Task<Department> GetDepartmentByIdAsync(int id);
+
+        Task<int> UpdateDepartmentAsync(Department department);
+
+        Task<Department> AddDepartmentAsync(Department department);
+
+        Task<int> DeleteDepartmentAsync(Department department);
     }
 }

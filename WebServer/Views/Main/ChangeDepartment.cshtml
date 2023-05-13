@@ -4,7 +4,7 @@
 }
 @using BusinessCore.Models;
 @{
-    CommissionChangeResponseModel model = ViewBag.Model;
+    DepartmentChangeResponseModel model = ViewBag.Model;
 }
 
 <div class="container rounded bg-white mt-5 mb-5">
@@ -28,15 +28,6 @@
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Назва</label><input id="name" type="text" class="form-control" placeholder="Назва" value="@(model?.Model?.Name)"></div>
                         <div class="col-md-12"><label class="labels">Аббревіація</label><input id="abbreviation" type="text" class="form-control" placeholder="Аббревіація" value="@(model?.Model?.Abbreviation)"></div>
-                        <div class="col-md-12">
-                            <label class="labels">Відділення</label><select id="department" class="form-select" aria-label="Виберіть зі списку">
-                                <option selected>@(model?.Model?.Department)</option>
-                                @foreach (string department in model.Departments)
-                                {
-                                    <option>@department</option>
-                                }
-                            </select>
-                        </div>
                         <div class="col-md-12">
                             <label class="labels">Голова</label>
                             <input id="director" list="chiefs" type="text" class="form-control" placeholder="Голова" value="@(model?.Model?.Head)">
@@ -80,4 +71,4 @@
         </div>
     </div>
 </div>
-<script src="~/js/ChangeCommission.js" type="module"></script>
+<script src="~/js/ChangeDepartment.js" type="module"></script>

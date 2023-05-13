@@ -47,6 +47,8 @@ namespace BusinessCore.Models
 
         public DateTime? DeletionDate { get; set; }
 
+        public int WorksAmmount { get; set; }
+
 
         public void ToModel(UserInfo item, string department)
         {
@@ -63,6 +65,7 @@ namespace BusinessCore.Models
             this.Department = department;
             this.AccessLevel = item.AccessLevel.Name;
             this.DeletionDate = item?.DeletionDate;
+            this.WorksAmmount = item.WorkAmmount;
         }
 
         public void ToFullModel(UserInfo item, string department)
@@ -80,6 +83,7 @@ namespace BusinessCore.Models
             this.Department = department;
             this.AccessLevel = item.AccessLevel.Name;
             this.DeletionDate = item?.DeletionDate;
+            this.WorksAmmount = item.WorkAmmount;
         }
     }
 }

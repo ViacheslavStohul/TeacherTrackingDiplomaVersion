@@ -5,35 +5,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebServer.Controllers
 {
-    [Route("Commission")]
-    public class CommissionController : BaseController
+    [Route("Department")]
+    public class DepartmentController : BaseController
     {
-        private readonly ICommissionServise _commissionServise;
-
-        public CommissionController(IUserServise _userServise, ICommissionServise commissionServise)
-            : base(_userServise)
+        private readonly IDepartmentServise _departmentServise;
+        private readonly IUserServise _userServise;
+        public DepartmentController(IUserServise userServise, IDepartmentServise departmentServise)
+            :base(userServise)
         {
-            _commissionServise = commissionServise;
+            _departmentServise = departmentServise;
         }
 
-        [Route("DeleteCommission")]
+        [Route("DeleteDepartment")]
         [HttpGet]
-        public async Task<IActionResult> DeleteCommisionAsync(int id)
+        public async Task<IActionResult> DeleteDepartmentAsync(int id)
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new Exception("Помилка зберігання. Невірно заповненні дані");
-                }
-
                 UserFullModel user = this.FullUser;
                 if (!user.User.AccessLevel.User || !user.User.AccessLevel.Chair || !user.User.AccessLevel.Departament || !user.User.AccessLevel.Comission)
                 {
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.DeleteCommissionAsync(id, user.User, this.Ip));
+                return this.Ok(await _departmentServise.DeleteDepartmentAsync(id, user.User, this.Ip));
             }
             catch (Exception ex)
             {
@@ -41,9 +36,9 @@ namespace WebServer.Controllers
             }
         }
 
-        [Route("UpdateCommission")]
+        [Route("UpdateDepartment")]
         [HttpPost]
-        public async Task<IActionResult> UpdateCommissionAsync([FromBody] CommissionTableModel model) 
+        public async Task<IActionResult> UpdateDepartmentAsync([FromBody] DepartmentTableModel model)
         {
             try
             {
@@ -58,7 +53,7 @@ namespace WebServer.Controllers
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.UpdateCommissionAsync(model, user.User, this.Ip));
+                return this.Ok(await _departmentServise.UpdateDepartmentAsync(model, user.User, this.Ip));
             }
             catch (Exception ex)
             {
@@ -66,9 +61,9 @@ namespace WebServer.Controllers
             }
         }
 
-        [Route("AddCommission")]
+        [Route("AddDepartment")]
         [HttpPost]
-        public async Task<IActionResult> AddCommission([FromBody] CommissionTableModel model)
+        public async Task<IActionResult> AddDepartmentAsync([FromBody] DepartmentTableModel model)
         {
             try
             {
@@ -83,7 +78,7 @@ namespace WebServer.Controllers
                     return new UnauthorizedResult();
                 }
 
-                return this.Ok(await _commissionServise.CreateCommissionAsync(model, user.User, this.Ip));
+                return this.Ok(await _departmentServise.CreateDepartmentAsync(model, user.User, this.Ip));
             }
             catch (Exception ex)
             {

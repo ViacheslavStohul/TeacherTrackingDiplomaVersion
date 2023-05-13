@@ -184,7 +184,7 @@ namespace BusinessCore.Services
                 foreach (UserInfo item in await _userRepository.GetUsersAsync())
                 {
                     UserTableModel model = new UserTableModel();
-                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Commission)?.Abbreviatoin);
+                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(item.Chair, item.Commission)?.Abbreviatoin);
                     list.Add(model);
                 }
                 return list;
@@ -195,7 +195,7 @@ namespace BusinessCore.Services
                 foreach (UserInfo item in await _userRepository.GetUsersByDepartmentAsync(user))
                 {
                     UserTableModel model = new UserTableModel();
-                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Commission)?.Abbreviatoin);
+                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(item.Chair, item.Commission)?.Abbreviatoin);
                     list.Add(model);
                 }
             }
@@ -205,7 +205,7 @@ namespace BusinessCore.Services
                 foreach (UserInfo item in await _userRepository.GetUsersByChairAsync(user))
                 {
                     UserTableModel model = new UserTableModel();
-                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Commission)?.Abbreviatoin);
+                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(item.Chair, item.Commission)?.Abbreviatoin);
                     list.Add(model);
                 }
             }
@@ -215,7 +215,7 @@ namespace BusinessCore.Services
                 foreach (UserInfo item in await _userRepository.GetUsersByComissionAsync(user))
                 {
                     UserTableModel model = new UserTableModel();
-                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(user.Chair, user.Commission)?.Abbreviatoin);
+                    model.ToModel(item, _departmentRepository.GetDepartmentByChairAndComission(item.Chair, item.Commission)?.Abbreviatoin);
                     list.Add(model);
                 }
             }

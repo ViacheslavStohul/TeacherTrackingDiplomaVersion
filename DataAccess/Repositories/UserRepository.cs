@@ -31,7 +31,7 @@ namespace DataAccess.Repositories
 
         public UserInfo GetUserInfoByLogin(string login)
         {
-            return this.context.UserInfos.Where(u => u.User.Login == login).Include(u => u.AccessLevel).FirstOrDefault();
+            return this.context.UserInfos.Where(u => u.User.Login == login).Include(u => u.AccessLevel).Include(u => u.OrganizationalWorks).FirstOrDefault();
         }
 
         public UserInfo GetFullUserInfo(int id)
@@ -136,6 +136,7 @@ namespace DataAccess.Repositories
                 .Include(u => u.Commission)
                 .Include(u => u.AccessLevel)
                 .Include(u => u.Rank)
+                .Include(u => u.OrganizationalWorks)
                 .Include(u => u.WorkType).FirstOrDefaultAsync();
         }
 
@@ -271,6 +272,64 @@ namespace DataAccess.Repositories
             }
 
             return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> SetChairHead(string name, Chair chair)
+        {
+            UserInfo user = this.context.UserInfos.Where(u => u.SecondName + " " + u.FirstName == name).FirstOrDefault();
+
+            if (user == null)
+            {
+                throw new Exception("Такого користувача не існує");
+            }
+
+            ChairHead chairHead = this.context.ChairHeads.Where(c => c.Chair == chair).FirstOrDefault();
+
+            if (chairHead == null)
+            {
+                this.context.ChairHeads.Add(new ChairHead
+                {
+                    Chair = chair,
+                    Head = user
+                });
+            }
+
+            else
+            {
+                chairHead.Head = user;
+            }
+
+            return await this.context.SaveChangesAsync();
+
+        }
+
+        public async Task<int> RemoveChairHead(string name, Chair chair)
+        {
+            ChairHead chairHead = this.context.ChairHeads.Where(c => c.Chair == chair).FirstOrDefault();
+
+            if (chairHead != null)
+            {
+                this.context.ChairHeads.Remove(chairHead);
+            }
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteAllUsersFromChairAsync(Chair chair)
+        {
+            await this.context.UserInfos.Where(u => u.Chair == chair)
+                .ForEachAsync(u => 
+                {
+                    u.Chair = this.context.Chairs.Where(ch => ch.ChairId == 1).FirstOrDefault();
+                });
+
+            return await this.context.SaveChangesAsync();
+        }
+
+        public async Task<UserInfo> GetUserByNameAndSurnameAsync(string name)
+        {
+            return await this.context.UserInfos
+                .Where(u => u.SecondName + " " + u.FirstName == name).FirstOrDefaultAsync();
         }
     }
 }

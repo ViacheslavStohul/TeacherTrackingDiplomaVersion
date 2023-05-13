@@ -45,5 +45,14 @@ namespace DataAccess.Entities
         public Rank? Rank { get; set; }
 
         public DateTime? DeletionDate { get; set; }
+
+        [NotMapped]
+        public int WorkAmmount
+        {
+            get
+            {
+                return this.OrganizationalWorks.Count;
+            }
+        }
     }
 }

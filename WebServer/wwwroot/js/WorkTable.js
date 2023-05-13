@@ -1,5 +1,8 @@
-﻿function AddButton() {
-    window.location = `ChangeChair?id=${-1}`;
+const paramsString = document.location.search; // ?page=4&limit=10&sortby=desc
+const searchParams = new URLSearchParams(paramsString);
+let userId = searchParams.get("id");
+function AddButton() {
+    window.location = `ChangeWork?user=${userId}&id=${-1}`;
 }
 let deleteModal = new bootstrap.Modal(document.getElementById('deleteBackDrop'), { backdrop: true, keyboard: true, focus: true });
 
@@ -16,7 +19,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 
 async function DeleteCommission() {
     deleteModal.toggle();
-    const query = await fetch(`https://localhost:7113/Chair/DeleteChair?id=${_Id}`);
+    const query = await fetch(`https://localhost:7113/Work/DeleteWork?user=${userId}&id=${_Id}`);
     if (query.status !== 200) {
         const response = await query.text();
         callToast(false, response);
@@ -25,7 +28,7 @@ async function DeleteCommission() {
         window.location.reload();
 }
 function EditButton(id) {
-    window.location = `ChangeChair?id=${id}`;
+    window.location = `ChangeWork?user=${userId}&id=${id}`;
 }
 
 function callToast(headerresult, message) {

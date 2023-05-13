@@ -23,6 +23,7 @@ namespace WebServer.Controllers
         }
 
         [Route("LogIn")]
+        [HttpGet]
         public async Task<IActionResult> LogInAsync(string login, string password)
         {
             try
@@ -108,6 +109,7 @@ namespace WebServer.Controllers
         }
 
         [Route("DeleteUser")]
+        [HttpGet]
         public async Task<IActionResult> DelteUserAsync(int id)
         {
             try
@@ -127,6 +129,7 @@ namespace WebServer.Controllers
         }
 
         [Route("ActivateUser")]
+        [HttpGet]
         public async Task<IActionResult> ActivateUserAsync(int id, string login, string password)
         {
             try

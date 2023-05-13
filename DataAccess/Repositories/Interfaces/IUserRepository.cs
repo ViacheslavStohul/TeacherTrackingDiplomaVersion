@@ -41,5 +41,13 @@ namespace DataAccess.Repositories.Interfaces
 
         Task<int> RemoveCommissionHead(string name, Commission commission);
 
+        Task<int> SetChairHead(string name, Chair chair);
+
+        Task<int> RemoveChairHead(string name, Chair chair);
+
+        Task<int> DeleteAllUsersFromChairAsync(Chair chair);
+
+        Task<UserInfo> GetUserByNameAndSurnameAsync(string name);
+
     }
 }
