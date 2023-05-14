@@ -49,6 +49,7 @@ namespace DataAccess
         public DbSet<ChairHead> ChairHeads { get; set; }
 
         public DbSet<BanLog> BanLogs { get; set; }
+        public DbSet<OrganizationWorkType> OrganizationalWorkTypes { get; set; }
         #endregion
 
         #region FluentAPI

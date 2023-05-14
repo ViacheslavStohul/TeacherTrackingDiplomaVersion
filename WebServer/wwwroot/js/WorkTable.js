@@ -19,7 +19,7 @@ document.getElementById('confirmDeleteBtn').addEventListener("click", function (
 
 async function DeleteCommission() {
     deleteModal.toggle();
-    const query = await fetch(`https://localhost:7113/Work/DeleteWork?user=${userId}&id=${_Id}`);
+    const query = await fetch(`https://localhost:7113/Work/DeleteWork?userId=${userId}&id=${_Id}`);
     if (query.status !== 200) {
         const response = await query.text();
         callToast(false, response);

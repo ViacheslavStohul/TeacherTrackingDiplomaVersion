@@ -27,6 +27,7 @@ namespace WebServer.Controllers
             _workServise = work;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             try
@@ -39,6 +40,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Users()
         {
             try
@@ -59,6 +61,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> ChangeUser(int id)
         {
             try
@@ -84,6 +87,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Chairs()
         {
             try
@@ -105,6 +109,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> ChangeChair(int id)
         {
             try
@@ -130,6 +135,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Commissions()
         {
             try
@@ -151,6 +157,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> ChangeCommission(int id)
         {
             try
@@ -176,6 +183,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Departments()
         {
             try
@@ -197,6 +205,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> ChangeDepartment(int id)
         {
             try
@@ -222,6 +231,7 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Works(int id)
         {
             try
@@ -234,6 +244,7 @@ namespace WebServer.Controllers
                 }
 
                 ViewBag.User = this.FullUser;
+                ViewBag.Id = id;
                 ViewBag.WorkTable = await _workServise.GetWorkTableAsync(id);
                 return View();
             }
@@ -243,8 +254,34 @@ namespace WebServer.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ChangeWork(int user, int id)
+        {
+            try
+            {
+                UserFullModel userInfo = this.FullUser;
+
+                if (userInfo.User.IdUserInfo != user)
+                {
+                    return new UnauthorizedResult();
+                }
+
+                WorkChangeResponseModel model = await _workServise.GetWorkToChangeAsync(user, id);
+
+                ViewBag.User = userInfo;
+
+                ViewBag.Model = model;
+
+                return View();
+            }
+            catch
+            {
+                return Redirect("../");
+            }
+        }
 
 
+        [HttpGet]
         public async Task<IActionResult> Exit(int id)
         {
             await _userService.SignOutAsync(id, this.Ip);

@@ -1,6 +1,7 @@
 ﻿using DataAccess.Entities;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,14 @@ namespace DataAccess.Repositories
             return await this.context.OrganizationalWorks.Where(w => w.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> AddOrganiztionWork(OrganizationalWork work, UserInfo user)
+        public async Task<OrganizationalWork> AddOrganiztionWorkAsync(OrganizationalWork work, UserInfo user)
         {
             this.context.OrganizationalWorks.Add(work);
             user.OrganizationalWorks.Add(work);
 
-            return await this.context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
+
+            return work;
         }
 
         public async Task<int> UpdateOrganizationAsync(OrganizationalWork work)
@@ -43,13 +46,23 @@ namespace DataAccess.Repositories
             return await this.context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteOrganizationWork(OrganizationalWork work, UserInfo user)
+        public async Task<int> DeleteOrganizationWorkAsync(OrganizationalWork work, UserInfo user)
         {
             user.OrganizationalWorks.Remove(work);
 
             this.context.OrganizationalWorks.Remove(work);
 
             return await this.context.SaveChangesAsync();
+        }
+
+        public List<string> GetWorkTypes()
+        {
+            return this.context.OrganizationalWorkTypes.Select(t => t.Description).ToList();
+        }
+
+        public async Task<OrganizationWorkType> GetWorkTypeByDescriptionAsync(string description)
+        {
+            return await this.context.OrganizationalWorkTypes.Where(t => t.Description == description).FirstOrDefaultAsync();
         }
     }
 }

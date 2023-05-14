@@ -4,7 +4,9 @@
 }
 @using BusinessCore.Models;
 @{
-    List<WorkTableModel> chairs = ViewBag.WorkTable as List<WorkTableModel>;
+    List<WorkTableModel> models = ViewBag.WorkTable as List<WorkTableModel>;
+    UserFullModel user = ViewBag.User as UserFullModel;
+    int id = ViewBag.Id;
 }
 
 <div class="container rounded bg-white mt-5 mb-5">
@@ -18,11 +20,14 @@
                             <th scope="col">Тип</th>
                             <th scope="col">Назва</th>
                             <th scope="col">Опис</th>
-                            <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:220px" onclick="AddButton()">Додати</button></th>
+                            @if (user.User.IdUserInfo == id)
+                            {
+                                <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:220px" onclick="AddButton()">Додати</button></th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (WorkTableModel row in chairs)
+                        @foreach (WorkTableModel row in models)
                         {
                             <tr>
                                 <th scope="row">@row.Id</th>
@@ -30,8 +35,11 @@
                                 <td>@row.Name</td>
                                 <td>@row.Description</td>
                                 <td style="width:240px;">
-                                    <button class="btn btn-success" type="button" onclick="EditButton(@row.Id.ToString())">Редагувати</button>
-                                    <button class="btn btn-danger" type="button" onclick="DeleteButton(@row.Id.ToString())">Видалити</button>
+                                    @if (user.User.IdUserInfo == id)
+                                    {
+                                        <button class="btn btn-success" type="button" onclick="EditButton(@row.Id.ToString())">Редагувати</button>
+                                        <button class="btn btn-danger" type="button" onclick="DeleteButton(@row.Id.ToString())">Видалити</button>
+                                    }
                                 </td>
                             </tr>
                         }

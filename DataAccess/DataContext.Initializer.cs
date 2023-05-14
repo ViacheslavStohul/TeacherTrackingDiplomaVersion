@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace DataAccess
                     updatedRowsCount += await CreateInitialRanks(completeMigrations);
                     updatedRowsCount += await CreateInitialTypes(completeMigrations);
                     updatedRowsCount += await CreateAdminAccount(completeMigrations);
+                    updatedRowsCount += await CreateWorkTypes(completeMigrations);
                     dbContextTransaction.Commit();
                     return updatedRowsCount;
                 }
@@ -244,6 +246,26 @@ namespace DataAccess
                     Name = "Позаштатний викладач",
                     Abbreviation = "П/В"
                 });
+
+                this.CompleteMigrations.Add(new CompleteMigration { CompleteMigrationId = migrationId });
+
+                return await this.SaveChangesAsync();
+            }
+
+            return 0;
+        }
+
+        public async Task<int> CreateWorkTypes(List<CompleteMigration> completeMigrations)
+        {
+            string migrationId = "8DD80FD1-D1CC-48C5-A6A0-BCAF2D4D25F1";
+
+            if (!completeMigrations.Any(cm => cm.CompleteMigrationId == migrationId))
+            {
+                this.OrganizationalWorkTypes.Add(new OrganizationWorkType{ Description = "Олімпіада" });
+                this.OrganizationalWorkTypes.Add(new OrganizationWorkType{ Description = "Стаття" });
+                this.OrganizationalWorkTypes.Add(new OrganizationWorkType{ Description = "Конференція" });
+                this.OrganizationalWorkTypes.Add(new OrganizationWorkType{ Description = "Підвищення кваліфікації" });
+                this.OrganizationalWorkTypes.Add(new OrganizationWorkType{ Description = "Методична розробка" });
 
                 this.CompleteMigrations.Add(new CompleteMigration { CompleteMigrationId = migrationId });
 

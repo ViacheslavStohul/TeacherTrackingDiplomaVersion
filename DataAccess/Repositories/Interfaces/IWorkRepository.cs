@@ -11,10 +11,14 @@ namespace DataAccess.Repositories.Interfaces
     {
         Task<OrganizationalWork> GetOrganizationWorkByIdAsync(int id);
 
-        Task<int> AddOrganiztionWork(OrganizationalWork work, UserInfo user);
+        Task<OrganizationalWork> AddOrganiztionWorkAsync(OrganizationalWork work, UserInfo user);
 
         Task<int> UpdateOrganizationAsync(OrganizationalWork work);
 
-        Task<int> DeleteOrganizationWork(OrganizationalWork work, UserInfo user);
+        Task<int> DeleteOrganizationWorkAsync(OrganizationalWork work, UserInfo user);
+
+        List<string> GetWorkTypes();
+
+        Task<OrganizationWorkType> GetWorkTypeByDescriptionAsync(string description);
     }
 }

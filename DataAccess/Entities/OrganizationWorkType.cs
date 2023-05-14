@@ -3,25 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Entities
 {
-    public class OrganizationalWork
+    public class OrganizationWorkType
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public OrganizationWorkType OrganizationType { get; set; }
-
-        [MaxLength(100)]
-        public string Name { get; set; }
-
-        [MaxLength(200)]
-        public string? Description { get; set; }
-
-        public DateTime Date { get; set; }
+        [StringLength(100)]
+        public string Description { get; set; }
     }
 }

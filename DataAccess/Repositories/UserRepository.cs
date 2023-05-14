@@ -44,6 +44,7 @@ namespace DataAccess.Repositories
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType)
                 .Include(u => u.OrganizationalWorks)
+                .ThenInclude(w => w.OrganizationType)
                 .FirstOrDefault();
         }
 
