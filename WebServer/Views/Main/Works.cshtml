@@ -20,6 +20,7 @@
                             <th scope="col">Тип</th>
                             <th scope="col">Назва</th>
                             <th scope="col">Опис</th>
+                            <th scope="col">Рік</th>
                             @if (user.User.IdUserInfo == id)
                             {
                                 <th scope="col"><button class="btn btn-primary btn-success" type="button" style="width:220px" onclick="AddButton()">Додати</button></th>
@@ -34,6 +35,7 @@
                                 <td>@row.OrganizationType</td>
                                 <td>@row.Name</td>
                                 <td>@row.Description</td>
+                                <td>@row.Date</td>
                                 <td style="width:240px;">
                                     @if (user.User.IdUserInfo == id)
                                     {
