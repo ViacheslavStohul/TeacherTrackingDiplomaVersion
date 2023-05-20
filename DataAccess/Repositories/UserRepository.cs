@@ -68,6 +68,7 @@ namespace DataAccess.Repositories
                 .Include(u => u.AccessLevel)
                 .Include(u => u.Rank)
                 .Include(u => u.WorkType)
+                .Include(u => u.OrganizationalWorks)
                 .ToListAsync();
             return a;
         }
