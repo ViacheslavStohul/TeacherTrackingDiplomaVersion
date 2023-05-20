@@ -60,6 +60,10 @@ namespace BusinessCore.Services
 
         public async Task<int> AddChairAsync(ChairTableModel model, UserInfo user, string ip)
         {
+            if (model.Department == "Відсутнє")
+            {
+                throw new Exception("Виберіть існуюче відділення");
+            }
             Chair chair = await _chairRepository.CreateChairAsync(new Chair
             {
                 Name = model.Name,
