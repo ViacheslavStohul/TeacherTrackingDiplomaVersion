@@ -7,14 +7,11 @@
     DepartmentChangeResponseModel model = ViewBag.Model;
 }
 
-<div class="container rounded bg-white mt-5 mb-5">
+<div class="container blur-settings mt-5 mb-5">
     <div class="row">
         @{
-            <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="username" class="font-weight-bold"></span><span class="photoPicker">Обрати фото</span></div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
+            <div class="col-md-6 border-right">
+                <div class="p-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         @if (model.Model.Id == 0)
                         {
@@ -26,30 +23,70 @@
                         }
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Назва</label><input id="name" type="text" class="form-control" placeholder="Назва" value="@(model?.Model?.Name)"></div>
-                        <div class="col-md-12"><label class="labels">Аббревіація</label><input id="abbreviation" type="text" class="form-control" placeholder="Аббревіація" value="@(model?.Model?.Abbreviation)"></div>
-                        <div class="col-md-12">
-                            <label class="labels">Голова</label>
-                            <input id="director" list="chiefs" type="text" class="form-control" placeholder="Голова" value="@(model?.Model?.Head)">
+                        <div class="col-md-12 input-container">
+                            <input type="text" id="name" value="@(model?.Model?.Name)" required>
+                            <label for="name"> Назва </label>
+                            <div class="bottom-line"></div>
+                        </div>
+
+                        <div class="col-md-12 input-container">
+                            <input type="text" id="abbreviation" value="@(model?.Model?.Abbreviation)" required>
+                            <label for="abbreviation"> Аббревіація </label>
+                            <div class="bottom-line"></div>
+                        </div>
+
+                        <div class="col-md-12 input-container">
+                            <input id="director" list="chiefs" type="text" value="@(model?.Model?.Head)" required>
                             <datalist id="chiefs">
                                 @foreach (object user in model.Users)
                                 {
                                     <option value="@user"></option>
                                 }
                             </datalist>
+                            <label for="director"> Голова </label>
+                            <div class="bottom-line"></div>
                         </div>
                     </div>
+
                     <div class="row mt-2">
-                        <div class="col-md-6 text-center"><button id="saveBtn" class="btn btn-primary profile-button" type="button">Зберегти</button></div>
-                        <div class="col-md-6 text-center"><button id="reloadBtn" class="btn btn-primary profile-button" type="button">Скинути зміни</button></div>
+                        <div class="col-md-6 text-center">
+                            <button id="saveBtn" class="manage-button" type="button">
+                                Зберегти
+                            </button>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                            <button id="reloadBtn" class="manage-button" type="button">
+                                Скинути зміни
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
-                    <div class="col-md-12"><label class="labels">Experience in Designing</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br>
-                    <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
+            <div class="col-md-6">
+                <div class="p-3">
+                    <div class="d-flex justify-content-center align-items-center mb-3">
+                        <h4 class="header-color"> Edit Experience </h4>
+                    </div>
+                    <br>
+                    <div class="col-md-12 input-container">
+                        <input id="experienceInDesigning" type="text" value="" required>
+                        <label for="experienceInDesigning"> Experience in Designing </label>
+                        <div class="bottom-line"></div>
+                    </div> 
+                    <br>
+                    <div class="col-md-12 input-container">
+                        <input id="additionalDetails" type="text" value="" required>
+                        <label for="additionalDetails"> Additional Details </label>
+                        <div class="bottom-line"></div>
+                    </div>
+
+                    <div class="col-md-12 text-center"> 
+                        <button 
+                            class="manage-button" 
+                            type="button"
+                        > Experience </button>
+                    </div>
                 </div>
             </div>
         }
@@ -57,16 +94,20 @@
 </div>
 <div class="modal fade" id="operation_success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content custom-modal">
             <div class="modal-header">
                 <h5 class="modal-title" id="Label">Увага</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: transparent">
+                    <svg fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+                </button>
             </div>
             <div class="modal-body">
                 Зміни внесено
             </div>
             <div class="modal-footer">
-                <button type="button" id="confirmBtn" class="btn btn-success">Зрозуміло</button>
+                <button type="button" id="confirmBtn" class="manage-button">Зрозуміло</button>
             </div>
         </div>
     </div>

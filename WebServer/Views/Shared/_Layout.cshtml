@@ -18,36 +18,36 @@
 </head>
 <body>
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('../images/img-02.jpg');"></div>
+        <div class="container-login100 background-settings"></div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0,0,0,0.5);">
+    <nav class="navbar navbar-expand-lg navbar-dark blur-navbar">
         <form class="form-inline">
-            <button class="btn menu-btn" type="button">
-                <img src="~/images/logo_white.svg" id="logoimg" width="50" height="50">
+            <button class="menu-btn burger-menu manage-button" type="button">
+                <img src="~/images/new_logo_white.png" id="logoimg" width="50" height="50" style="object-fit: contain">
                 <span>Menu</span>
             </button>
         </form>
     </nav>
     <div class="wrapper">
         <div class="menu">
-            <nav class="menu-list bg-dark">
-                <div id="mainbtn"><a href="#">Головна</a></div>
+            <nav class="menu-list custom-list">
+                <div id="mainbtn" class="manage-button"><a href="#">Головна</a></div>
                 @{
                     UserFullModel user = ViewBag.User as UserFullModel;
 
                     if (user.User.AccessLevel.Chair || user.User.AccessLevel.Comission || user.User.AccessLevel.Departament || user.User.AccessLevel.User)
                     {
-                        <div id="userbtn"><a href="#">Користувачі</a></div>
+                        <div id="userbtn" class="manage-button"><a href="#">Користувачі</a></div>
                     }
 
                     if (user.User.AccessLevel.Chair && user.User.AccessLevel.Comission && user.User.AccessLevel.Departament && user.User.AccessLevel.User)
                         {
-                        <div id="chairbtn"><a href="#">Кафедри</a></div>
-                        <div id="comissionbtn"><a href="#">Комісії</a></div>
-                        <div id="departbtn"><a href="#">Відділення</a></div>
+                        <div id="chairbtn" class="manage-button"><a href="#">Кафедри</a></div>
+                        <div id="comissionbtn" class="manage-button"><a href="#">Комісії</a></div>
+                        <div id="departbtn" class="manage-button"><a href="#">Відділення</a></div>
                     }
                 }
-                <div id="exitbtn"><a href="#">Вийти з системи</a></div>
+                <div id="exitbtn" class="manage-button"><a href="#">Вийти з системи</a></div>
             </nav>
         </div>
     </div>
@@ -60,17 +60,21 @@
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content custom-modal">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Увага</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: transparent">
+                        <svg fill="white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="modal-body">
                     Чи дійсно хочете вийти з системи?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="totaySuperPuperExitBtn" class="btn btn-primary">Так</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ні</button>
+                    <button type="button" id="totaySuperPuperExitBtn" class="manage-button">Так</button>
+                    <button type="button" class="manage-button" data-bs-dismiss="modal">Ні</button>
                 </div>
             </div>
         </div>

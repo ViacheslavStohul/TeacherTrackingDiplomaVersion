@@ -51,7 +51,14 @@ namespace DataAccess.Entities
         {
             get
             {
-                return this.OrganizationalWorks.Count;
+                try
+                {
+                    return this.OrganizationalWorks.Count;
+                }
+                catch
+                {
+                    return 0;
+                }
             }
         }
     }

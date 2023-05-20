@@ -1,6 +1,18 @@
-body {
-    background: rgb(56, 141, 89);
+*:focus {
+    box-shadow: none!important;
 }
+
+.background-settings {
+    background-image: url('../images/img-02.jpg');
+    filter: brightness(0.6);
+}
+
+.custom-list {
+    background: transparent!important;
+    backdrop-filter: blur(25px);
+    box-shadow: 1px 0 9px -4px white;
+}
+
 .limiter {
     width: 100%;
     margin: 0 auto;
@@ -35,14 +47,134 @@ body {
     z-index:-1;
     top: 0;
     left: 0;
-    background: #005bea;
-    background: -webkit-linear-gradient(bottom, #3ea266, #7ed573);
+    /* background: #005bea; */
+    /* background: -webkit-linear-gradient(bottom, #3ea266, #7ed573);
     background: -o-linear-gradient(bottom, #3ea266, #7ed573);
     background: -moz-linear-gradient(bottom,#3ea266, #7ed573);
     background: linear-gradient(bottom, #3ea266, #7ed573);
-    opacity: 0.85;
+    opacity: 0.85; */
 }
 
+.blur-settings {
+    background: transparent !important;
+    backdrop-filter: blur(25px);
+    box-shadow: 0 0 3px 0 white;
+    border-radius: 20px!important;
+    color: white;
+    font-weight: bold;
+}
+
+.input-container, .select-container {
+    position: relative;
+    margin: 15px 0;
+}
+
+.input-container input, .select-container select {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: white;
+    padding: 5px 0;
+    font-weight: bold;
+}
+
+.input-container label, .select-container label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.2s ease-in-out;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.input-container input:disabled {
+    color: rgb(255 211 211);
+    cursor: not-allowed;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label,
+.input-container input:disabled ~ label,
+.select-container select:focus ~ label,
+.select-container select:valid ~ label,
+.select-container select:disabled ~ label {
+    transform: translateY(-20px);
+}
+
+.select-container {
+    background: transparent;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.select-container option {
+    color: black
+}
+
+.bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
+
+input:disabled ~ .bottom-line {
+    opacity: 0.3;
+}
+
+.header-color {
+    color: white;
+    font-weight: bold;
+}  
+
+.w-45 {
+    width: 45%;
+}
+
+.default-color-settings {
+    color: white;
+    font-weight: bold;
+}
+
+.manage-button {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+  
+.manage-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    border-bottom: 3px solid white;
+    transition: width 0.2s ease-in-out;
+}
+  
+.manage-button:hover::after {
+    width: 100%;
+}
+
+.custom-modal {
+    border-radius: 20px;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    color: white;
+    box-shadow: 0 0 3px 0 white;
+    font-weight: bold;
+}
 
 .profile-button {
     background: rgb(66, 155, 74);
@@ -90,7 +222,8 @@ section {
 }
 .menu {
     position: fixed;
-    left: 0;top: 0;
+    left: -6px;
+    top: 0;
     z-index: 99;
     width: 300px;
     height: 100vh;
@@ -107,6 +240,7 @@ section {
     flex-direction: column;
     width:350px;
     padding-top:65px;
+    transition: all .3s easy; 
 }
 .menu-list a {
     text-decoration: none;
@@ -120,9 +254,11 @@ section {
     margin-top:10px;
     text-align: center;
 }
-.menu-list div:hover {
-    background-color: #50595E;
-}
+/* .menu-list div:hover {
+    box-shadow: -5px 0 5px 0px white;
+    background: transparent;
+} */
+
 .menu-btn span{
     font-size: 25px;
     margin-left:10px;
@@ -141,10 +277,10 @@ section {
     background-color: #23262a;
     color: #77888f;
 }
-.menu-btn:hover{
+/* .menu-btn:hover{
     background-color: #657781;
     color: #ecf7ff;
-}
+} */
 #logoimg{
     position: sticky;
     z-index: 100;
@@ -154,3 +290,61 @@ section {
     min-width:107px;
 }
 
+.blur-navbar {
+    background: #0000004f;
+    backdrop-filter: blur(25px);
+    padding: 15px 10px;
+}
+
+.burger-menu {
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: white;
+}
+
+.btn-close::before {
+    color: white!important;
+}  
+
+.btn-close {
+    color: white!important;
+} 
+
+.btn-close::after {
+    color: white!important;
+} 
+
+#DataTables_Table_0_previous > a, 
+#DataTables_Table_0_paginate > ul > li.paginate_button.page-item.active > a,
+#DataTables_Table_0_next > a {
+    background: transparent;
+    border: none;
+    color: white!important;
+    cursor: pointer!important;
+}
+
+#DataTables_Table_0_paginate > ul > li > a {
+    background: transparent;
+    border: none;
+}
+
+.active > a {
+    border-bottom: 2px solid white!important;
+}
+
+.page-link {
+    color: white!important;
+}
+
+#DataTables_Table_0_filter > label > input {
+    background: transparent;
+    color: white;
+}
+
+#DataTables_Table_0 > tbody > tr > td {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
