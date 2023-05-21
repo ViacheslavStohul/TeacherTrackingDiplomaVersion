@@ -10,7 +10,7 @@
 <div class="container blur-settings mt-5 mb-5">
     <div class="row">
         @{
-            <div class="col-md-6 border-right">
+            <div class="col-md-12 border-right">
                 <div class="p-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         @if (model.Model.Id == 0)
@@ -63,32 +63,6 @@
                     <div class="row mt-2">
                         <div class="col-md-6 text-center"><button id="saveBtn" class="manage-button" type="button">Зберегти</button></div>
                         <div class="col-md-6 text-center"><button id="reloadBtn" class="manage-button" type="button">Скинути зміни</button></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="p-3">
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <h4 class="header-color"> Edit Experience </h4>
-                    </div>
-                    <br>
-                    <div class="col-md-12 input-container">
-                        <input id="experienceInDesigning" type="text" value="" required>
-                        <label for="experienceInDesigning"> Experience in Designing </label>
-                        <div class="bottom-line"></div>
-                    </div> 
-                    <br>
-                    <div class="col-md-12 input-container">
-                        <input id="additionalDetails" type="text" value="" required>
-                        <label for="additionalDetails"> Additional Details </label>
-                        <div class="bottom-line"></div>
-                    </div>
-
-                    <div class="col-md-12 text-center"> 
-                        <button 
-                            class="manage-button" 
-                            type="button"
-                        > Experience </button>
                     </div>
                 </div>
             </div>

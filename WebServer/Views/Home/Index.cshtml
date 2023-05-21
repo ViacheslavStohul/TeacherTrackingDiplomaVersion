@@ -23,31 +23,27 @@
 			<div class="wrap-login100 p-t-150 p-b-30">
 				<form class="login100-form validate-form">
 					<div class="login100-form-avatar">
-						<img src="images/logo_black.svg" alt="logo">
+						<img src="images/new_logo_white.png" alt="logo">
 					</div>
 
 					<span class="login100-form-title p-t-20 p-b-40">
 						Система контролю рейтингу викладачів ОНТУ
 					</span>
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "Мінімум 6 символів">
-						<input class="input100" type="text" name="login" placeholder="Ім'я користувача">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user"></i>
-						</span>
-					</div>
+					<div class="col-md-12 input-container">
+            <input type="text" id="login" name="login" required>
+            <label for="login"> Логін </label>
+            <div class="bottom-line"></div>
+          </div>
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "Мінімум 8 символів">
-						<input class="input100" type="password" name="pass" placeholder="Пароль">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock"></i>
-						</span>
-					</div>
+					<div class="col-md-12 input-container">
+            <input type="text" id="password" name="pass" required>
+            <label for="password"> Пароль </label>
+            <div class="bottom-line"></div>
+          </div>
 
 					<div class="container-login100-form-btn p-t-10">
-						<button class="login100-form-btn" type="button">
+						<button class="login100-form-btn manage-button" type="button">
 							Увійти
 						</button>
 					</div>

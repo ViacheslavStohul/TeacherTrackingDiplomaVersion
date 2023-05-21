@@ -2,6 +2,10 @@
     box-shadow: none!important;
 }
 
+body {
+    background: black !important;
+}
+
 .background-settings {
     background-image: url('../images/img-02.jpg');
     filter: brightness(0.6);

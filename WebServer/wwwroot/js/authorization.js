@@ -16,15 +16,9 @@ const onLoginInput = () => {
         login.parentNode.setAttribute('data-validate', "Мінімум 6 символів");
         login.parentNode.classList.add('alert-validate');
     }
-    else login.parentNode.classList.remove('alert-validate');
-}
-
-const onPasswordInput = () => {
-    if (password.value.length < 8) {
-        password.parentNode.setAttribute('data-validate', "Мінімум 8 символів");
-        password.parentNode.classList.add('alert-validate');
+    else {
+        login.parentNode.classList.remove('alert-validate');
     }
-    else password.parentNode.classList.remove('alert-validate');
 }
 
 login.addEventListener("input", onLoginInput);

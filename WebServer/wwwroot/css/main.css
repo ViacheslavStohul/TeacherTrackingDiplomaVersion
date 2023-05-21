@@ -1,6 +1,14 @@
+input {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: white !important;
+}
 
-
-
+input:-internal-autofill-selected {
+  background-color: transparent !important;
+  background-image: none !important;
+  color: white !important;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -181,20 +189,34 @@ iframe {
   height: 100%;
   top: 0;
   left: 0;
-  background: #005bea;
+  /* background: #005bea;
   background: -webkit-linear-gradient(bottom, #3ea266, #7ed573);
   background: -o-linear-gradient(bottom, #3ea266, #7ed573);
   background: -moz-linear-gradient(bottom,#3ea266, #7ed573);
   background: linear-gradient(bottom, #3ea266, #7ed573);
-  opacity: 0.85;
+  opacity: 0.85; */
+  /* background: 
+    linear-gradient(200deg, #494949, transparent), 
+    linear-gradient(45deg, #3f3f3f, transparent), 
+    radial-gradient(white, white); */
+
+  /* background: radial-gradient(circle, #333, white); */
+}
+
+body {
+  background-color: #222;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .wrap-login100 {
   width: 390px;
   background: transparent;
 }
-
-
 
 /*------------------------------------------------------------------
 [  ]*/
@@ -369,11 +391,11 @@ iframe {
   border-radius: 25px;
   top: 0;
   left: 0;
-  background: #005bea;
+  /* background: #005bea;
   background: -webkit-linear-gradient(left, #307558, #95ea8b);
   background: -o-linear-gradient(left, #307558, #95ea8b);
   background: -moz-linear-gradient(left, #307558, #95ea8b);
-  background: linear-gradient(left, #307558, #95ea8b);
+  background: linear-gradient(left, #307558, #95ea8b); */
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
@@ -381,10 +403,10 @@ iframe {
   opacity: 0;
 }
 
-.login100-form-btn:hover {
+/* .login100-form-btn:hover {
   background: transparent;
   color: #fff;
-}
+} */
 
 .login100-form-btn:hover:before {
   opacity: 1;
@@ -457,8 +479,8 @@ iframe {
   content: attr(data-validate);
   position: absolute;
   max-width: 70%;
-  background-color: white;
-  border: 1px solid #c80000;
+  background-color: transparent;
+  border: none;
   border-radius: 14px;
   padding: 4px 25px 4px 10px;
   top: 50%;
@@ -471,7 +493,7 @@ iframe {
   pointer-events: none;
 
   font-family: Montserrat-Bold;
-  color: #c80000;
+  color: #ffffff;
   font-size: 13px;
   line-height: 1.4;
   text-align: left;
@@ -490,7 +512,7 @@ iframe {
   font-family: FontAwesome;
   display: block;
   position: absolute;
-  color: #c80000;
+  color: #ffffff;
   font-size: 15px;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -522,4 +544,81 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+/*//////////////////////////////////////////////////////////////////*/
+
+.input-container, .select-container {
+  position: relative;
+  margin: 15px 0;
+}
+
+.input-container input, .select-container select {
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: white;
+  padding: 5px 0;
+  font-weight: bold;
+}
+
+.input-container label, .select-container label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.input-container input:disabled {
+  color: rgb(255 211 211);
+  cursor: not-allowed;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label,
+.input-container input:disabled ~ label {
+  transform: translateY(-20px);
+}
+
+.bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
+
+input:disabled ~ .bottom-line {
+  opacity: 0.3;
+}
+
+.manage-button {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.manage-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  border-bottom: 3px solid white;
+  transition: width 0.2s ease-in-out;
+}
+
+.manage-button:hover::after {
+  width: 100%;
 }
