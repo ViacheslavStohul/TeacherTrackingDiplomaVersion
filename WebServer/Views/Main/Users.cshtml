@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach (UserTableModel row in users)
                         {
-                            <tr style="@(row.DeletionDate == null ? "color: #ffcccc;" : "")">
+                            <tr style="@(row.DeletionDate != null ? "color: #ffcccc;" : "")">
                                 <th scope="row" style="visibility: hidden">@row.Id</th>
                                 <td>@($"{row.SecondName} {row.FirstName}")</td>
                                 <td>@row.Email</td>
