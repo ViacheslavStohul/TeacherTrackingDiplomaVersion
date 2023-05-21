@@ -38,5 +38,4 @@ function callToast(headerresult, message) {
         "</div></div>";
     document.querySelector('.toast-container').innerHTML = toastget;
     new bootstrap.Toast(document.querySelector('.toast'), { delay: 2000, animation: true, autohide: true }).show();
-
 }

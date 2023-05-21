@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach (UserTableModel row in users)
                         {
-                            <tr>
+                            <tr style="@(row.DeletionDate == null ? "color: #ffcccc;" : "")">
                                 <th scope="row" style="visibility: hidden">@row.Id</th>
                                 <td>@($"{row.SecondName} {row.FirstName}")</td>
                                 <td>@row.Email</td>
@@ -127,7 +127,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form autocomplete="off">
                     <div class="my-4 input-container">
                         <input type="text" id="username" required>
                         <label for="username"> Ім'я користувача </label>
